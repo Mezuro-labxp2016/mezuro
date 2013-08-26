@@ -14,8 +14,8 @@ sudo -u postgres psql < db_bootstrap.sql
 
 #Kalibro
 USER_HOME=$(eval echo ~${SUDO_USER})
-wget http://ccsl.ime.usp.br/redmine/attachments/download/164/KalibroService-1.0-r6.tar.gz
-tar -xzf KalibroService-1.0-r6.tar.gz
+wget https://downloads.sourceforge.net/project/kalibrometrics/KalibroService.tar.gz?r=&ts=1377480037
+tar -xzf KalibroService.tar.gz
 mkdir ${USER_HOME}/.kalibro
 mkdir ${USER_HOME}/.kalibro/projects
 printf "serviceSide: SERVER\nclientSettings:\n  serviceAddress: \"http://localhost:8080/KalibroService/\"\nserverSettings:\n  loadDirectory: /usr/share/tomcat6/.kalibro/projects\n  databaseSettings:\n    databaseType: POSTGRESQL\n    jdbcUrl: \"jdbc:postgresql://localhost:5432/kalibro\"\n    username: \"kalibro\"\n    password: \"kalibro\"\n" >> ${USER_HOME}/.kalibro/kalibro.settings
@@ -23,12 +23,12 @@ printf "serviceSide: SERVER\nclientSettings:\n  serviceAddress: \"http://localho
 sudo chmod 777 -R ${USER_HOME}/.kalibro
 sudo ln -s ${USER_HOME}/.kalibro /usr/share/tomcat6/.kalibro
 sudo mkdir /var/lib/tomcat6/webapps/KalibroService/
-sudo unzip KalibroService-1.0/KalibroService.war -d /var/lib/tomcat6/webapps/KalibroService/
+sudo unzip KalibroService/KalibroService.war -d /var/lib/tomcat6/webapps/KalibroService/
 
 #Imports sample configuration
 CURRENT_DIR=$(pwd)
 cd /var/lib/tomcat6/webapps/KalibroService/WEB-INF/lib
-java -classpath "*" org.kalibro.ImportConfiguration ${CURRENT_DIR}/KalibroService-1.0/Configuration.yml http://localhost:8080/KalibroService/
+java -classpath "*" org.kalibro.ImportConfiguration ${CURRENT_DIR}/KalibroService/Configuration.yml http://localhost:8080/KalibroService/
 
 sudo chmod 777 -R ${USER_HOME}/.kalibro
 sudo service tomcat6 restart
