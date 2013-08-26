@@ -28,7 +28,7 @@ sudo unzip KalibroService/KalibroService.war -d /var/lib/tomcat6/webapps/Kalibro
 #Imports sample configuration
 CURRENT_DIR=$(pwd)
 cd /var/lib/tomcat6/webapps/KalibroService/WEB-INF/lib
-java -classpath "*" org.kalibro.ImportConfiguration ${CURRENT_DIR}/KalibroService/Configuration.yml http://localhost:8080/KalibroService/
+java -classpath "*" org.kalibro.ImportConfiguration ${CURRENT_DIR}/KalibroService/configs/Configuration.yml http://localhost:8080/KalibroService/
 
 sudo chmod 777 -R ${USER_HOME}/.kalibro
 sudo service tomcat6 restart
