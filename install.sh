@@ -14,7 +14,7 @@ sudo -u postgres psql < db_bootstrap.sql
 
 #Kalibro
 USER_HOME=$(eval echo ~${SUDO_USER})
-wget https://downloads.sourceforge.net/project/kalibrometrics/KalibroService.tar.gz?r=&ts=1377480037
+wget https://downloads.sourceforge.net/project/kalibrometrics/KalibroService.tar.gz
 tar -xzf KalibroService.tar.gz
 mkdir ${USER_HOME}/.kalibro
 mkdir ${USER_HOME}/.kalibro/projects
