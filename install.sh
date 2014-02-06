@@ -6,7 +6,7 @@ sudo bash -c "echo \"deb http://analizo.org/download/ ./\" >> /etc/apt/sources.l
 sudo bash -c "echo \"deb-src http://analizo.org/download/ ./\" >> /etc/apt/sources.list.d/analizo.list"
 wget -O - http://analizo.org/download/signing-key.asc | sudo apt-key add -
 sudo apt-get update
-sudo apt-get install tomcat6 tomcat6-common libtomcat6-java postgresql doxyparse sloccount libgraph-perl liblist-compare-perl libtest-class-perl libtest-exception-perl libyaml-perl libstatistics-descriptive-perl libstatistics-online-perl ruby libclass-accessor-perl unzip
+sudo apt-get install postgresql doxyparse sloccount libgraph-perl liblist-compare-perl libtest-class-perl libtest-exception-perl libyaml-perl libstatistics-descriptive-perl libstatistics-online-perl ruby libclass-accessor-perl unzip
 wget http://analizo.org/download/analizo_1.16.0_all.deb
 sudo dpkg -i analizo_1.16.0_all.deb
 
