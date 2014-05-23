@@ -1,10 +1,12 @@
 #!/bin/bash
-
+ONT
 #Bash unofficial strict mode: http://www.redsymbol.net/articles/unofficial-bash-strict-mode/
 set -eu
 set -o pipefail
 
 ANALIZO_VERSION=1.17.0
+
+export DEBIAN_FRONTEND=noninteractive
 
 #Kalibro dependencies (including Analizo)-sudo touch /etc/apt/sources.list.d/analizo.list
 sudo bash -c "echo \"deb http://analizo.org/download/ ./\" >> /etc/apt/sources.list.d/analizo.list"
