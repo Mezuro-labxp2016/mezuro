@@ -5,15 +5,15 @@ set -eu
 set -o pipefail
 
 #Set script configuration
-ANALIZO_VERSION=1.17.0
-DATABASE_TYPE=POSTGRESQL
-DATABASE_URL="jdbc:postgresql://localhost:5432"
-DATABASE_USER=kalibro
-DATABASE_PASSWORD=kalibro
-WEBAPPS_DIR=/var/lib/tomcat6/webapps
+ANALIZO_VERSION='1.17.0'
+DATABASE_TYPE='POSTGRESQL'
+DATABASE_URL='jdbc:postgresql://localhost:5432'
+DATABASE_USER='kalibro'
+DATABASE_PASSWORD='kalibro'
+WEBAPPS_DIR='/var/lib/tomcat6/webapps'
 TOMCAT_HOME='/usr/share/tomcat6'
 KALIBRO_TOMCAT_HOME="${TOMCAT_HOME}/.kalibro"
-KALIBRO_DIR=${KALIBRO_TOMCAT_HOME}
+KALIBRO_DIR="${KALIBRO_TOMCAT_HOME}
 
 #Kalibro dependencies (including Analizo)-sudo touch /etc/apt/sources.list.d/analizo.list
 sudo bash -c "echo \"deb http://analizo.org/download/ ./\" > /etc/apt/sources.list.d/analizo.list"
@@ -72,10 +72,12 @@ serverSettings:
     password: "${DATABASE_PASSWORD}"
 EOF
 
-sudo mkdir ${WEBAPPS_DIR}
-sudo chown :tomcat6 ${WEBAPPS_DIR}
-sudo chmod 664 -R ${WEBAPPS_DIR}
-sudo chmod +x ${WEBAPPS_DIR}
+if [ ! -d "${WEBAPPS_DIR}" ]; then
+  sudo mkdir ${WEBAPPS_DIR}
+  sudo chown :tomcat6 ${WEBAPPS_DIR}
+  sudo chmod 664 -R ${WEBAPPS_DIR}
+  sudo chmod +x ${WEBAPPS_DIR}
+fi
 
 sudo cp "${tmpdir}/KalibroService/KalibroService.war" "${WEBAPPS_DIR}/"
 
