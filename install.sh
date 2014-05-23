@@ -17,23 +17,90 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y analizo=${ANALIZO_VERSION
 
 sudo -u postgres psql --set ON_ERROR_STOP=1 < db_bootstrap.sql
 
-#Kalibro
-USER_HOME=$(eval echo ~${SUDO_USER})
-wget https://downloads.sourceforge.net/project/kalibrometrics/KalibroService.tar.gz
-tar -xzf KalibroService.tar.gz
-mkdir ${USER_HOME}/.kalibro
-mkdir ${USER_HOME}/.kalibro/projects
-printf "serviceSide: SERVER\nclientSettings:\n  serviceAddress: \"http://localhost:8080/KalibroService/\"\nserverSettings:\n  loadDirectory: /usr/share/tomcat6/.kalibro/projects\n  databaseSettings:\n    databaseType: POSTGRESQL\n    jdbcUrl: \"jdbc:postgresql://localhost:5432/kalibro\"\n    username: \"kalibro\"\n    password: \"kalibro\"\n" >> ${USER_HOME}/.kalibro/kalibro.settings
-printf "serviceSide: SERVER\nclientSettings:\n  serviceAddress: \"http://localhost:8080/KalibroService/\"\nserverSettings:\n  loadDirectory: /usr/share/tomcat6/.kalibro/tests/projects\n  databaseSettings:\n    databaseType: POSTGRESQL\n    jdbcUrl: \"jdbc:postgresql://localhost:5432/kalibro_test\"\n    username: \"kalibro\"\n    password: \"kalibro\"\n" >> ${USER_HOME}/.kalibro/kalibro_test.settings
-sudo chmod 777 -R ${USER_HOME}/.kalibro
-sudo ln -s ${USER_HOME}/.kalibro /usr/share/tomcat6/.kalibro
-sudo mkdir /var/lib/tomcat6/webapps/KalibroService/
-sudo unzip KalibroService/KalibroService.war -d /var/lib/tomcat6/webapps/KalibroService/
+
+# Kalibro
+
+tmpdir=$(mktemp -d)
+trap 'rm -rf "${tmpdir}"' EXIT
+
+if [ -f "/var/tmp/KalibroService.tar.gz" ]; then
+  cp "/var/tmp/KalibroService.tar.gz" "${tmpdir}/"
+else
+  wget https://downloads.sourceforge.net/project/kalibrometrics/KalibroService.tar.gz \
+      -O "${tmpdir}/KalibroService.tar.gz"
+  cp "${tmpdir}/KalibroService.tar.gz" "/var/tmp/KalibroService.tar.gz"
+fi
+
+tar -xzf "${tmpdir}/KalibroService.tar.gz" -C "${tmpdir}"
+
+TOMCAT_HOME=$(eval echo ~tomcat6)
+if ! [ -d "${TOMCAT_HOME}" ]; then
+  TOMCAT_HOME='/usr/share/tomcat6'
+  if ! [ -d "${TOMCAT_HOME}" ]; then
+    echo "Failed to determine tomcat6 home dir"
+    exit 1
+  fi
+fi
+
+KALIBRO_TOMCAT_HOME="${TOMCAT_HOME}/.kalibro"
+
+KALIBRO_DIR=${KALIBRO_TOMCAT_HOME}
+! [ -d ${KALIBRO_DIR} ] && sudo mkdir ${KALIBRO_DIR}
+KALIBRO_SUDO=sudo
+
+for d in ${KALIBRO_DIR}/{projects,logs}; do
+  ! [ -d "${d}" ] && ${KALIBRO_SUDO} mkdir -p ${d}
+done
+
+${KALIBRO_SUDO} chown -R :tomcat6 ${KALIBRO_DIR}
+${KALIBRO_SUDO} chmod 'g+s,a+r,ug+w,o-w' -R ${KALIBRO_DIR}
+
+DATABASE_TYPE=POSTGRESQL
+DATABASE_URL="jdbc:postgresql://localhost:5432"
+DATABASE_USER=kalibro
+DATABASE_PASSWORD=kalibro
+
+echo | ${KALIBRO_SUDO} tee ${KALIBRO_DIR}/kalibro.settings <<EOF
+serviceSide: SERVER
+clientSettings:
+  serviceAddress: "http://localhost:8080/KalibroService/"
+serverSettings:
+  loadDirectory: ${KALIBRO_TOMCAT_HOME}/projects
+  databaseSettings:
+    databaseType: postgresql
+    jdbcUrl: "${DATABASE_URL}/kalibro"
+    username: "${DATABASE_USER}"
+    password: "${DATABASE_PASSWORD}"
+EOF
+
+echo | ${KALIBRO_SUDO} tee ${KALIBRO_DIR}/kalibro_test.settings <<EOF
+serviceSide: SERVER
+clientSettings:
+  serviceAddress: "http://localhost:8080/KalibroService/"
+serverSettings:
+  loadDirectory: ${KALIBRO_TOMCAT_HOME}/tests/projects
+  databaseSettings:
+    databaseType: ${DATABASE_TYPE}
+    jdbcUrl: "${DATABASE_URL}/kalibro_test"
+    username: "${DATABASE_TEST_USER}"
+    password: "${DATABASE_TEST_PASSWORD}"
+EOF
+
+WEBAPPS_DIR=/var/lib/tomcat6/webapps
+
+if [ ! -d "${WEBAPPS_DIR}" ]; then
+  sudo mkdir ${WEBAPPS_DIR}
+  sudo chown :tomcat6 ${WEBAPPS_DIR}
+  sudo chmod 664 -R ${WEBAPPS_DIR}
+  sudo chmod +x ${WEBAPPS_DIR}
+fi
+
+sudo cp "${tmpdir}/KalibroService/KalibroService.war" "${WEBAPPS_DIR}/"
 
 #Imports sample configuration
-CURRENT_DIR=$(pwd)
-cd /var/lib/tomcat6/webapps/KalibroService/WEB-INF/lib
-java -classpath "*" org.kalibro.ImportConfiguration ${CURRENT_DIR}/KalibroService/configs/Configuration.yml http://localhost:8080/KalibroService/
 
-sudo chmod 777 -R ${USER_HOME}/.kalibro
+#CURRENT_DIR=$(pwd)
+#cd /var/lib/tomcat6/webapps/KalibroService/WEB-INF/lib
+#java -classpath "*" org.kalibro.ImportConfiguration ${CURRENT_DIR}/KalibroService/configs/Configuration.yml http://localhost:8080/KalibroService/
+
 sudo service tomcat6 restart
