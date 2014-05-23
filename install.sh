@@ -83,7 +83,7 @@ if [ ! -d "${WEBAPPS_DIR}" ]; then
 fi
 
 # Install Kalibro Service application on Tomcat
-sudo install -m=664 "${tmpdir}/KalibroService/KalibroService.war" "${WEBAPPS_DIR}/"
+sudo install -m 0664 "${tmpdir}/KalibroService/KalibroService.war" "${WEBAPPS_DIR}/"
 
 # Restart Tomcat to start Kalibro Service
 sudo service tomcat6 restart
