@@ -39,17 +39,17 @@ wget "${KALIBRO_DOWNLOAD_URL}" -O "${tmpdir}/KalibroService.tar.gz"
 tar -xzf "${tmpdir}/KalibroService.tar.gz" -C "${tmpdir}"
 
 # Create Kalibro directory structure on Tomcat dir
-sudo mkdir -p ${KALIBRO_TOMCAT_DIR}
-for d in ${KALIBRO_TOMCAT_DIR}/{projects,logs}; do
+sudo mkdir -p ${KALIBRO_TOMCAT_HOME}
+for d in ${KALIBRO_TOMCAT_HOME}/{projects,logs}; do
   ! [ -d "${d}" ] && sudo mkdir -p ${d}
 done
 
 # Make tomcat6 user owner of Kalibro dir
-sudo chown -R :tomcat6 ${KALIBRO_TOMCAT_DIR}
-sudo chmod 'g+s,a+r,ug+w,o-w' -R ${KALIBRO_TOMCAT_DIR}
+sudo chown -R :tomcat6 ${KALIBRO_TOMCAT_HOME}
+sudo chmod 'g+s,a+r,ug+w,o-w' -R ${KALIBRO_TOMCAT_HOME}
 
 # Add Kalibro Service settings to Tomcat
-echo | sudo tee ${KALIBRO_TOMCAT_DIR}/kalibro.settings <<EOF
+echo | sudo tee ${KALIBRO_TOMCAT_HOME}/kalibro.settings <<EOF
 serviceSide: SERVER
 clientSettings:
   serviceAddress: "http://localhost:8080/KalibroService/"
@@ -61,7 +61,7 @@ serverSettings:
     username: "${DATABASE_USER}"
     password: "${DATABASE_PASSWORD}"
 EOF
-echo | sudo tee ${KALIBRO_TOMCAT_DIR}/kalibro_test.settings <<EOF
+echo | sudo tee ${KALIBRO_TOMCAT_HOME}/kalibro_test.settings <<EOF
 serviceSide: SERVER
 clientSettings:
   serviceAddress: "http://localhost:8080/KalibroService/"
