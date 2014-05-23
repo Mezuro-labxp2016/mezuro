@@ -1,5 +1,5 @@
 #!/bin/bash
-ONT
+
 #Bash unofficial strict mode: http://www.redsymbol.net/articles/unofficial-bash-strict-mode/
 set -eu
 set -o pipefail
