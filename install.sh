@@ -11,7 +11,7 @@ sudo bash -c "echo \"deb http://analizo.org/download/ ./\" > /etc/apt/sources.li
 sudo bash -c "echo \"deb-src http://analizo.org/download/ ./\" >> /etc/apt/sources.list.d/analizo.list"
 wget -O - http://analizo.org/download/signing-key.asc | sudo apt-key add -
 sudo apt-get update -qq
-sudo DEBIAN_FRONTEND=noninteractive apt-get install -y analizo=${ANALIZO_VERSION} tomcat6 tomcat6-common libtomcat6-java postgresql unzip
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y analizo=${ANALIZO_VERSION} tomcat6 tomcat6-common libtomcat6-java postgresql unzip libzmq3
 
 sudo -u postgres psql --set ON_ERROR_STOP=1 < db_bootstrap.sql
 
