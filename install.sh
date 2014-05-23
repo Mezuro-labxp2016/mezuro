@@ -4,18 +4,16 @@
 set -eu
 set -o pipefail
 
-ANALIZO_VERSION=1.18.0
+ANALIZO_VERSION=1.17.0
 
 #Kalibro dependencies (including Analizo)-sudo touch /etc/apt/sources.list.d/analizo.list
 sudo bash -c "echo \"deb http://analizo.org/download/ ./\" >> /etc/apt/sources.list.d/analizo.list"
 sudo bash -c "echo \"deb-src http://analizo.org/download/ ./\" >> /etc/apt/sources.list.d/analizo.list"
 wget -O - http://analizo.org/download/signing-key.asc | sudo apt-key add -
 sudo apt-get update
-sudo apt-get install tomcat6 tomcat6-common libtomcat6-java postgresql doxyparse sloccount libgraph-perl liblist-compare-perl libtest-class-perl libtest-exception-perl libyaml-perl libstatistics-descriptive-perl libstatistics-online-perl ruby libclass-accessor-perl unzip
-wget http://analizo.org/download/analizo_${ANALIZO_VERSION}_all.deb
-sudo dpkg -i analizo_${ANALIZO_VERSION}_all.deb
+sudo apt-get install analizo=${ANALIZO_VERSION} tomcat6 tomcat6-common libtomcat6-java postgresql unzip
 
-sudo -u postgres psql < db_bootstrap.sql
+sudo -u postgres psql --set ON_ERROR_STOP=1 < db_bootstrap.sql
 
 #Kalibro
 USER_HOME=$(eval echo ~${SUDO_USER})
