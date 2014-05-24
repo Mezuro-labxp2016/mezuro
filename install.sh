@@ -96,5 +96,9 @@ fi
 # Install Kalibro Service application on Tomcat
 sudo install -m 0664 "${tmpdir}/KalibroService/KalibroService.war" "${WEBAPPS_DIR}/"
 
+# Imports sample configuration
+cd "${WEBAPPS_DIR}"
+java -classpath KalibroService.war org.kalibro.ImportConfiguration "${tmpdir}/KalibroService/configs/Configuration.yml" http://localhost:8080/KalibroService/
+
 # Restart Tomcat to start Kalibro Service
 sudo service tomcat6 restart
