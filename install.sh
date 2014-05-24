@@ -23,6 +23,8 @@ DATABASE_USER='kalibro'
 DATABASE_PASSWORD='kalibro'
 WEBAPPS_DIR='/var/lib/tomcat6/webapps'
 TOMCAT_HOME='/usr/share/tomcat6'
+KALIBRO_SERVICE_DIR="${WEBAPPS_DIR}/KalibroService"
+KALIBRO_SERVICE_URL='http://localhost:8080/KalibroService/'
 KALIBRO_TOMCAT_HOME="${TOMCAT_HOME}/.kalibro"
 
 # Kalibro dependencies (including Analizo)
@@ -94,11 +96,12 @@ if [ ! -d "${WEBAPPS_DIR}" ]; then
 fi
 
 # Install Kalibro Service application on Tomcat
-sudo install -m 0664 "${tmpdir}/KalibroService/KalibroService.war" "${WEBAPPS_DIR}/"
+sudo mkdir -p "${KALIBRO_SERVICE_DIR}"
+sudo unzip -d "${tmpdir}/KalibroService/KalibroService.war" "${KALIBRO_SERVICE_DIR}"
 
 # Imports sample configuration
-cd "${WEBAPPS_DIR}"
-java -classpath KalibroService.war org.kalibro.ImportConfiguration "${tmpdir}/KalibroService/configs/Configuration.yml" http://localhost:8080/KalibroService/
+cd "${KALIBRO_SERVICE_DIR}/WEB-INF/lib"
+java -classpath "*" org.kalibro.ImportConfiguration "${tmpdir}/KalibroService/configs/Configuration.yml" "${KALIBRO_SERVICE_URL}"
 
 # Restart Tomcat to start Kalibro Service
 sudo service tomcat6 restart
