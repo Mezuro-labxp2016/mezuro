@@ -1,6 +1,13 @@
 #!/bin/bash
-# Script to install Kalibro Service and dependencies on Ubuntu 12.04
-# It may work on Debian 6 but this is untested
+# Script to install Kalibro Service and dependencies on Ubuntu 12.04.
+# It may work on Debian 6 but this is untested.
+#
+# This script assumes a sane enviroment with at least the following
+# depedencies already installed and configured:
+# 	-sudo
+#	-wget
+#	-tar
+#	-coreutils
 
 # Bash unofficial strict mode: http://www.redsymbol.net/articles/unofficial-bash-strict-mode/
 set -eu
@@ -30,7 +37,11 @@ sudo -u postgres psql --set ON_ERROR_STOP=1 < db_bootstrap.sql
 # Kalibro installation
 # Create temporary directory
 tmpdir=$(mktemp -d)
-trap 'rm -rf "${tmpdir}"' EXIT
+# Clean up temporary directory on exit
+function clean_up {
+	rm -rf "${tmpdir}"
+}
+trap clean_up EXIT
 
 # Download Kalibro
 wget "${KALIBRO_DOWNLOAD_URL}" -O "${tmpdir}/KalibroService.tar.gz"
