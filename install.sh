@@ -97,7 +97,7 @@ fi
 
 # Install Kalibro Service application on Tomcat
 sudo mkdir -p "${KALIBRO_SERVICE_DIR}"
-sudo unzip -d "${tmpdir}/KalibroService/KalibroService.war" "${KALIBRO_SERVICE_DIR}"
+sudo unzip "${tmpdir}/KalibroService/KalibroService.war" -d "${KALIBRO_SERVICE_DIR}"
 
 # Imports sample configuration
 cd "${KALIBRO_SERVICE_DIR}/WEB-INF/lib"
