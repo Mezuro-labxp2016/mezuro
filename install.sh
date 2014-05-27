@@ -66,7 +66,7 @@ clientSettings:
 serverSettings:
   loadDirectory: ${KALIBRO_TOMCAT_HOME}/projects
   databaseSettings:
-    databaseType: postgresql
+    databaseType: ${DATABASE_TYPE}
     jdbcUrl: "${DATABASE_URL}/kalibro"
     username: "${DATABASE_USER}"
     password: "${DATABASE_PASSWORD}"
