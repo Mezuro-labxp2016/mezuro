@@ -25,7 +25,7 @@ WEBAPPS_DIR='/var/lib/tomcat6/webapps'
 TOMCAT_HOME='/usr/share/tomcat6'
 KALIBRO_SERVICE_DIR="${WEBAPPS_DIR}/KalibroService"
 KALIBRO_SERVICE_URL='http://localhost:8080/KalibroService/'
-KALIBRO_TOMCAT_HOME="${TOMCAT_HOME}/.kalibro"
+KALIBRO_HOME="${HOME}/.kalibro"
 
 # Kalibro dependencies (including Analizo)
 sudo bash -c "echo \"deb http://analizo.org/download/ ./\" > /etc/apt/sources.list.d/analizo.list"
@@ -51,41 +51,44 @@ wget "${KALIBRO_DOWNLOAD_URL}" -O "${tmpdir}/KalibroService.tar.gz"
 # Untar Kalibro
 tar -xzf "${tmpdir}/KalibroService.tar.gz" -C "${tmpdir}"
 
-# Create Kalibro directory structure on Tomcat dir
-sudo mkdir -p ${KALIBRO_TOMCAT_HOME}
-for d in ${KALIBRO_TOMCAT_HOME}/{projects,logs}; do
-  ! [ -d "${d}" ] && sudo mkdir -p ${d}
+# Create Kalibro directory structure on Home dir
+mkdir -p ${KALIBRO_HOME}
+for d in ${KALIBRO_HOME}/{projects,logs}; do
+  ! [ -d "${d}" ] && mkdir -p ${d}
 done
 
 # Make tomcat6 user owner of Kalibro dir
-sudo chown -R :tomcat6 ${KALIBRO_TOMCAT_HOME}
-sudo chmod 'g+s,a+r,ug+w,o-w' -R ${KALIBRO_TOMCAT_HOME}
+sudo chown -R :tomcat6 ${KALIBRO_HOME}
+sudo chmod 'g+s,a+r,ug+w,o-w' -R ${KALIBRO_HOME}
 
-# Add Kalibro Service settings to Tomcat
-echo | sudo tee ${KALIBRO_TOMCAT_HOME}/kalibro.settings <<EOF
+# Add Kalibro Service settings to Home
+echo | tee ${KALIBRO_HOME}/kalibro.settings <<EOF
 serviceSide: SERVER
 clientSettings:
   serviceAddress: "http://localhost:8080/KalibroService/"
 serverSettings:
-  loadDirectory: ${KALIBRO_TOMCAT_HOME}/projects
+  loadDirectory: ${KALIBRO_HOME}/projects
   databaseSettings:
     databaseType: postgresql
     jdbcUrl: "${DATABASE_URL}/kalibro"
     username: "${DATABASE_USER}"
     password: "${DATABASE_PASSWORD}"
 EOF
-echo | sudo tee ${KALIBRO_TOMCAT_HOME}/kalibro_test.settings <<EOF
+echo | tee ${KALIBRO_HOME}/kalibro_test.settings <<EOF
 serviceSide: SERVER
 clientSettings:
   serviceAddress: "http://localhost:8080/KalibroService/"
 serverSettings:
-  loadDirectory: ${KALIBRO_TOMCAT_HOME}/tests/projects
+  loadDirectory: ${KALIBRO_HOME}/tests/projects
   databaseSettings:
     databaseType: ${DATABASE_TYPE}
     jdbcUrl: "${DATABASE_URL}/kalibro_test"
     username: "${DATABASE_USER}"
     password: "${DATABASE_PASSWORD}"
 EOF
+
+# Link Kalibro configuration to Tomcat
+sudo ln -sf ${KALIBRO_HOME} ${TOMCAT_HOME}/.kalibro
 
 # If Tomcat webapps dir doesn't exist, create it
 if [ ! -d "${WEBAPPS_DIR}" ]; then
