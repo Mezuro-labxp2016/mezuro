@@ -37,8 +37,9 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y analizo=${ANALIZO_VERSION
 sudo -u postgres psql --set ON_ERROR_STOP=1 < db_bootstrap.sql
 
 # Kalibro installation
-# Create temporary directory
+# Create temporary directory and make it world readable
 tmpdir=$(mktemp -d)
+chmod +r "${tmpdir}"
 # Clean up temporary directory on exit
 function clean_up {
 	rm -rf "${tmpdir}"
@@ -85,13 +86,13 @@ EOF
 
 # Make tomcat6 user owner of Kalibro dir
 sudo chown -R :tomcat6 ${KALIBRO_TOMCAT_HOME}
-sudo chmod 775 -R ${KALIBRO_TOMCAT_HOME}
+sudo chmod 'ug+rwX,o-w' -R ${KALIBRO_TOMCAT_HOME} # Equivalent to 775 to folders and 664/775 (if file didn't have/have +x bit) for files
 
 # If Tomcat webapps dir doesn't exist, create it
 if [ ! -d "${WEBAPPS_DIR}" ]; then
   sudo mkdir "${WEBAPPS_DIR}"
   sudo chown :tomcat6 "${WEBAPPS_DIR}"
-  sudo chmod 775 -R "${WEBAPPS_DIR}"
+  sudo chmod 'ug+rwX,o-w' -R "${WEBAPPS_DIR}"
 fi
 
 # Install Kalibro Service application on Tomcat
