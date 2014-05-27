@@ -59,7 +59,7 @@ done
 
 # Make tomcat6 user owner of Kalibro dir
 sudo chown -R :tomcat6 "${KALIBRO_HOME}"
-sudo chmod 'g+s,a+r,ug+w,o-w' -R "${KALIBRO_HOME}"
+sudo chmod 777 -R "${KALIBRO_HOME}"
 
 # Add Kalibro Service settings to Home
 echo | tee "${KALIBRO_HOME}/kalibro.settings" <<EOF
