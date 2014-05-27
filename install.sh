@@ -39,7 +39,7 @@ sudo -u postgres psql --set ON_ERROR_STOP=1 < db_bootstrap.sql
 # Kalibro installation
 # Create temporary directory and make it world readable
 tmpdir=$(mktemp -d)
-chmod +r "${tmpdir}"
+chmod +rX "${tmpdir}"
 # Clean up temporary directory on exit
 function clean_up {
 	rm -rf "${tmpdir}"
