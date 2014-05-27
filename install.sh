@@ -52,20 +52,20 @@ wget "${KALIBRO_DOWNLOAD_URL}" -O "${tmpdir}/KalibroService.tar.gz"
 tar -xzf "${tmpdir}/KalibroService.tar.gz" -C "${tmpdir}"
 
 # Create Kalibro directory structure on Home dir
-mkdir -p ${KALIBRO_HOME}
-for d in ${KALIBRO_HOME}/{projects,logs}; do
+mkdir -p "${KALIBRO_HOME}"
+for d in "${KALIBRO_HOME}/{projects,logs}"; do
   ! [ -d "${d}" ] && mkdir -p ${d}
 done
 
 # Make tomcat6 user owner of Kalibro dir
-sudo chown -R :tomcat6 ${KALIBRO_HOME}
-sudo chmod 'g+s,a+r,ug+w,o-w' -R ${KALIBRO_HOME}
+sudo chown -R :tomcat6 "${KALIBRO_HOME}"
+sudo chmod 'g+s,a+r,ug+w,o-w' -R "${KALIBRO_HOME}"
 
 # Add Kalibro Service settings to Home
-echo | tee ${KALIBRO_HOME}/kalibro.settings <<EOF
+echo | tee "${KALIBRO_HOME}/kalibro.settings" <<EOF
 serviceSide: SERVER
 clientSettings:
-  serviceAddress: "http://localhost:8080/KalibroService/"
+  serviceAddress: "${KALIBRO_SERVICE_URL}"
 serverSettings:
   loadDirectory: ${KALIBRO_HOME}/projects
   databaseSettings:
@@ -74,10 +74,10 @@ serverSettings:
     username: "${DATABASE_USER}"
     password: "${DATABASE_PASSWORD}"
 EOF
-echo | tee ${KALIBRO_HOME}/kalibro_test.settings <<EOF
+echo | tee "${KALIBRO_HOME}/kalibro_test.settings" <<EOF
 serviceSide: SERVER
 clientSettings:
-  serviceAddress: "http://localhost:8080/KalibroService/"
+  serviceAddress: "${KALIBRO_SERVICE_URL}"
 serverSettings:
   loadDirectory: ${KALIBRO_HOME}/tests/projects
   databaseSettings:
@@ -88,7 +88,7 @@ serverSettings:
 EOF
 
 # Link Kalibro configuration to Tomcat
-sudo ln -sf ${KALIBRO_HOME} ${TOMCAT_HOME}/.kalibro
+sudo ln -sf "${KALIBRO_HOME}" "${TOMCAT_HOME}/.kalibro"
 
 # If Tomcat webapps dir doesn't exist, create it
 if [ ! -d "${WEBAPPS_DIR}" ]; then
