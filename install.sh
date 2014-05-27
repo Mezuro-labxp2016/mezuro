@@ -103,8 +103,9 @@ sudo mkdir -p "${KALIBRO_SERVICE_DIR}"
 sudo unzip "${tmpdir}/KalibroService/KalibroService.war" -d "${KALIBRO_SERVICE_DIR}"
 
 # Imports sample configuration
-cd "${KALIBRO_SERVICE_DIR}/WEB-INF/lib"
+pushd "${KALIBRO_SERVICE_DIR}/WEB-INF/lib"
 java -classpath "*" org.kalibro.ImportConfiguration "${tmpdir}/KalibroService/configs/Configuration.yml" "${KALIBRO_SERVICE_URL}"
+popd
 
 # Restart Tomcat to start Kalibro Service
 sudo service tomcat6 restart
