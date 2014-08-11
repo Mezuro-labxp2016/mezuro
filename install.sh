@@ -15,7 +15,7 @@ set -o pipefail
 IFS=$'\n\t'
 
 # Set script configuration
-ANALIZO_VERSION='1.17.0' # Version >1.17.0 needs Ubuntu 13.10/Debian 7
+ANALIZO_VERSION='1.18.0' # Version >1.17.0 needs Ubuntu 13.10/Debian 7
 KALIBRO_DOWNLOAD_URL='https://downloads.sourceforge.net/project/kalibrometrics/KalibroService.tar.gz'
 DATABASE_TYPE='POSTGRESQL'
 DATABASE_URL='jdbc:postgresql://localhost:5432'
