@@ -15,7 +15,7 @@ set -o pipefail
 IFS=$'\n\t'
 
 # Set script configuration
-ANALIZO_VERSION='1.18.0' # Version >1.17.0 needs Ubuntu 13.10/Debian 7
+ANALIZO_VERSION='1.17.0' # Version >1.17.0 needs Ubuntu 13.10/Debian 7
 
 # Kalibro dependencies (including Analizo)
 sudo bash -c "echo \"deb http://analizo.org/download/ ./\" > /etc/apt/sources.list.d/analizo.list"
