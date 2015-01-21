@@ -8,6 +8,7 @@
 #	-wget
 #	-coreutils
 # -RVM with Kalibro's Ruby version already installed (See rvm.io)
+# -Postgresql
 
 # Bash unofficial strict mode: http://www.redsymbol.net/articles/unofficial-bash-strict-mode/
 set -eu
@@ -22,8 +23,7 @@ sudo bash -c "echo \"deb http://analizo.org/download/ ./\" > /etc/apt/sources.li
 sudo bash -c "echo \"deb-src http://analizo.org/download/ ./\" >> /etc/apt/sources.list.d/analizo.list"
 wget -O - http://analizo.org/download/signing-key.asc | sudo apt-key add -
 sudo apt-get update -qq
-sudo DEBIAN_FRONTEND=noninteractive apt-get install -y analizo=${ANALIZO_VERSION} postgresql subversion git
-sudo service postgresql start
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y analizo=${ANALIZO_VERSION} subversion git
 
 # Kalibro Processor
 git clone https://github.com/mezuro/kalibro_processor.git -b kalibro_client_integration kalibro_processor
