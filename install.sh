@@ -23,6 +23,7 @@ sudo bash -c "echo \"deb-src http://analizo.org/download/ ./\" >> /etc/apt/sourc
 wget -O - http://analizo.org/download/signing-key.asc | sudo apt-key add -
 sudo apt-get update -qq
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y analizo=${ANALIZO_VERSION} postgresql subversion git
+sudo service postgresql start
 
 # Kalibro Processor
 git clone https://github.com/mezuro/kalibro_processor.git -b kalibro_client_integration kalibro_processor
