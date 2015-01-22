@@ -42,7 +42,7 @@ export BUNDLE_GEMFILE=""
 # Kalibro Configurations
 git clone https://github.com/mezuro/kalibro_configurations.git -b integrating_with_prezento kalibro_configurations
 pushd kalibro_configurations
-cp config/database.yml.postgresql_sample config/database.yml
+cp config/database.yml.sample config/database.yml
 export BUNDLE_GEMFILE=$PWD/Gemfile
 bundle install
 bundle exec rake db:setup db:migrate
