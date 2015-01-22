@@ -33,9 +33,9 @@ cp config/database.yml.postgresql_sample config/database.yml
 cp config/repositories.yml.sample config/repositories.yml
 export BUNDLE_GEMFILE=$PWD/Gemfile
 bundle install
-bundle exec rake db:setup db:migrate
-bundle exec rails s -p 8082 -d
-bundle exec bin/delayed_job start
+RAILS_ENV=local bundle exec rake db:setup db:migrate
+RAILS_ENV=local bundle exec rails s -p 8082 -d
+RAILS_ENV=local bundle exec bin/delayed_job start
 popd
 export BUNDLE_GEMFILE=""
 
