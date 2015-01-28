@@ -26,7 +26,7 @@ sudo apt-get update -qq
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y analizo=${ANALIZO_VERSION} subversion git
 
 # Kalibro Processor
-git clone https://github.com/mezuro/kalibro_processor.git -b kalibro_client_integration kalibro_processor
+git clone https://github.com/mezuro/kalibro_processor.git -b v0.3.0.rc1 kalibro_processor
 pushd kalibro_processor
 psql -c "create role kalibro_processor with createdb login password 'kalibro_processor'" -U postgres
 cp config/database.yml.postgresql_sample config/database.yml
@@ -40,7 +40,7 @@ popd
 export BUNDLE_GEMFILE=""
 
 # Kalibro Configurations
-git clone https://github.com/mezuro/kalibro_configurations.git -b integrating_with_prezento kalibro_configurations
+git clone https://github.com/mezuro/kalibro_configurations.git -b v0.0.1.rc1 kalibro_configurations
 pushd kalibro_configurations
 cp config/database.yml.sample config/database.yml
 export BUNDLE_GEMFILE=$PWD/Gemfile
