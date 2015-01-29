@@ -32,7 +32,7 @@ psql -c "create role kalibro_processor with createdb login password 'kalibro_pro
 cp config/database.yml.postgresql_sample config/database.yml
 cp config/repositories.yml.sample config/repositories.yml
 export BUNDLE_GEMFILE=$PWD/Gemfile
-bundle install
+bundle install --retry=3
 RAILS_ENV=local bundle exec rake db:setup db:migrate
 RAILS_ENV=local bundle exec rails s -p 8082 -d
 RAILS_ENV=local bundle exec bin/delayed_job start
@@ -44,7 +44,7 @@ git clone https://github.com/mezuro/kalibro_configurations.git -b v0.0.1.rc1 kal
 pushd kalibro_configurations
 cp config/database.yml.sample config/database.yml
 export BUNDLE_GEMFILE=$PWD/Gemfile
-bundle install
+bundle install --retry=3
 bundle exec rake db:setup db:migrate
 bundle exec rails s -p 8083 -d
 popd
