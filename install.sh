@@ -40,7 +40,7 @@ popd
 export BUNDLE_GEMFILE=""
 
 # Kalibro Configurations
-git clone https://github.com/mezuro/kalibro_configurations.git -b v0.0.1.rc1 kalibro_configurations
+git clone https://github.com/mezuro/kalibro_configurations.git -b v0.0.1.rc2 kalibro_configurations
 pushd kalibro_configurations
 cp config/database.yml.sample config/database.yml
 export BUNDLE_GEMFILE=$PWD/Gemfile
