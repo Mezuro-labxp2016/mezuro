@@ -1,14 +1,4 @@
 #!/bin/bash
-# Script to install Kalibro Service and dependencies on Ubuntu 12.04.
-# It may work on Debian 6 but this is untested.
-#
-# This script assumes a sane enviroment with at least the following
-# depedencies already installed and configured:
-# -sudo
-#	-wget
-#	-coreutils
-# -RVM with Kalibro's Ruby version already installed (See rvm.io)
-# -Postgresql
 
 # Bash unofficial strict mode: http://www.redsymbol.net/articles/unofficial-bash-strict-mode/
 set -eu
