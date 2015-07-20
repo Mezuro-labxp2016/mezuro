@@ -5,6 +5,8 @@ set -eu
 set -o pipefail
 IFS=$'\n\t'
 
+declare -a bundle_opts=('--deployment' '--without=test development' '--retry=3')
+
 # Set script configuration
 # Use default from environment if set, otherwise use 1.17.0 since newer versions need Ubuntu 13.10/Debian 7
 if [ -z "${ANALIZO_VERSION+x}" ]; then
@@ -27,13 +29,15 @@ psql -c "create role kalibro_processor with createdb login password 'kalibro_pro
 cp config/database.yml.postgresql_sample config/database.yml
 cp config/repositories.yml.sample config/repositories.yml
 
+export BUNDLE_GEMFILE=$PWD/Gemfile
 if [ -n "$CACHE_DIR" ]; then
-    mkdir -p "$CACHE_DIR/kalibro_processor/bundle"
-    export BUNDLE_PATH="$CACHE_DIR/kalibro_processor/bundle"
+    bundle_dir="$CACHE_DIR/kalibro_processor/bundle"
+    mkdir -p "$bundle_dir"
+    bundle install "${bundle_opts[@]}" --path="$bundle_dir" 
+else
+    bundle install "${bundle_opts[@]}"
 fi
 
-export BUNDLE_GEMFILE=$PWD/Gemfile
-bundle install --deployment --without="test development" --retry=3
 RAILS_ENV=local bundle exec rake db:setup db:migrate
 RAILS_ENV=local bundle exec rails s -p 8082 -d
 RAILS_ENV=local bundle exec bin/delayed_job start
@@ -46,13 +50,15 @@ pushd kalibro_configurations
 psql -c "create role kalibro_configurations with createdb login password 'kalibro_configurations'" -U postgres
 cp config/database.yml.postgresql_sample config/database.yml
 
+export BUNDLE_GEMFILE=$PWD/Gemfile
 if [ -n "$CACHE_DIR" ]; then
-    mkdir -p "$CACHE_DIR/kalibro_configurations/bundle"
-    export BUNDLE_PATH="$CACHE_DIR/kalibro_configurations/bundle"
+    bundle_dir="$CACHE_DIR/kalibro_configurations/bundle"
+    mkdir -p "$bundle_dir"
+    bundle install "${bundle_opts[@]}" --path="$bundle_dir" 
+else
+    bundle install "${bundle_opts[@]}"
 fi
 
-export BUNDLE_GEMFILE=$PWD/Gemfile
-bundle install --deployment --without="test development" --retry=3
 bundle exec rake db:setup db:migrate
 bundle exec rails s -p 8083 -d
 popd
