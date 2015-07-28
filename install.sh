@@ -45,7 +45,7 @@ popd
 unset BUNDLE_GEMFILE BUNDLE_PATH
 
 # Kalibro Configurations
-git clone https://github.com/mezuro/kalibro_configurations.git -b v0.1.1 kalibro_configurations
+git clone https://github.com/mezuro/kalibro_configurations.git -b v1.0.0 kalibro_configurations
 pushd kalibro_configurations
 psql -c "create role kalibro_configurations with createdb login password 'kalibro_configurations'" -U postgres
 cp config/database.yml.postgresql_sample config/database.yml
