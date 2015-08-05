@@ -23,7 +23,7 @@ if [ -n "$ANALIZO_VERSION" ]; then
 fi
 
 # Kalibro Processor
-git clone https://github.com/mezuro/kalibro_processor.git -b v0.9.1 kalibro_processor
+git clone https://github.com/mezuro/kalibro_processor.git -b v0.9.2 kalibro_processor
 pushd kalibro_processor
 psql -c "create role kalibro_processor with createdb login password 'kalibro_processor'" -U postgres
 cp config/database.yml.postgresql_sample config/database.yml
