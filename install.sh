@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Bash unofficial strict mode: http://www.redsymbol.net/articles/unofficial-bash-strict-mode/
-set -eu
+set -e
 set -o pipefail
 IFS=$'\n\t'
 
@@ -14,7 +14,7 @@ if [ -z "${ANALIZO_VERSION+x}" ]; then
 fi
 
 # Kalibro dependencies (including Analizo)
-if [ -n "$ANALIZO_VERSION" ]; then
+if [ -n "${ANALIZO_VERSION+x}" ]; then
     sudo bash -c "echo \"deb http://analizo.org/download/ ./\" > /etc/apt/sources.list.d/analizo.list"
     sudo bash -c "echo \"deb-src http://analizo.org/download/ ./\" >> /etc/apt/sources.list.d/analizo.list"
     wget -O - http://analizo.org/download/signing-key.asc | sudo apt-key add -
@@ -30,7 +30,7 @@ cp config/database.yml.postgresql_sample config/database.yml
 cp config/repositories.yml.sample config/repositories.yml
 
 export BUNDLE_GEMFILE=$PWD/Gemfile
-if [ -n "$CACHE_DIR" ]; then
+if [ -n "${CACHE_DIR+x}" ]; then
     bundle_dir="$CACHE_DIR/kalibro_processor/bundle"
     mkdir -p "$bundle_dir"
     bundle install "${bundle_opts[@]}" --path="$bundle_dir" 
@@ -51,7 +51,7 @@ psql -c "create role kalibro_configurations with createdb login password 'kalibr
 cp config/database.yml.postgresql_sample config/database.yml
 
 export BUNDLE_GEMFILE=$PWD/Gemfile
-if [ -n "$CACHE_DIR" ]; then
+if [ -n "${CACHE_DIR+x}" ]; then
     bundle_dir="$CACHE_DIR/kalibro_configurations/bundle"
     mkdir -p "$bundle_dir"
     bundle install "${bundle_opts[@]}" --path="$bundle_dir" 
