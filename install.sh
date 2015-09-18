@@ -9,12 +9,20 @@ declare -a bundle_opts=('--deployment' '--without=test development' '--retry=3')
 
 # Set script configuration
 # Use default from environment if set, otherwise use 1.17.0 since newer versions need Ubuntu 13.10/Debian 7
-if [ -z "${ANALIZO_VERSION+x}" ]; then
+if [ -z "${ANALIZO_VERSION}" ]; then
     ANALIZO_VERSION='1.17.0'
 fi
 
+if  [ -z "${KALIBRO_CONFIGURATIONS_VERSION}" ]; then
+    KALIBRO_CONFIGURATIONS_VERSION='v1.1.1'
+fi
+
+if [ -z "${KALIBRO_PROCESSOR_VERSION}" ]; then
+    KALIBRO_PROCESSOR_VERSION='v0.11.0'
+fi
+
 # Kalibro dependencies (including Analizo)
-if [ -n "${ANALIZO_VERSION+x}" ]; then
+if ! [ "${ANALIZO_VERSION}" = "none" ]; then
     sudo bash -c "echo \"deb http://analizo.org/download/ ./\" > /etc/apt/sources.list.d/analizo.list"
     sudo bash -c "echo \"deb-src http://analizo.org/download/ ./\" >> /etc/apt/sources.list.d/analizo.list"
     wget -O - http://analizo.org/download/signing-key.asc | sudo apt-key add -
@@ -23,14 +31,14 @@ if [ -n "${ANALIZO_VERSION+x}" ]; then
 fi
 
 # Kalibro Processor
-git clone https://github.com/mezuro/kalibro_processor.git -b v0.11.0 kalibro_processor
+git clone https://github.com/mezuro/kalibro_processor.git -b "$KALIBRO_PROCESSOR_VERSION" kalibro_processor
 pushd kalibro_processor
 psql -c "create role kalibro_processor with createdb login password 'kalibro_processor'" -U postgres
 cp config/database.yml.postgresql_sample config/database.yml
 cp config/repositories.yml.sample config/repositories.yml
 
 export BUNDLE_GEMFILE=$PWD/Gemfile
-if [ -n "${CACHE_DIR+x}" ]; then
+if [ -n "${CACHE_DIR}" ]; then
     bundle_dir="$CACHE_DIR/kalibro_processor/bundle"
     mkdir -p "$bundle_dir"
     bundle install "${bundle_opts[@]}" --path="$bundle_dir" 
@@ -45,7 +53,7 @@ popd
 unset BUNDLE_GEMFILE BUNDLE_PATH
 
 # Kalibro Configurations
-git clone https://github.com/mezuro/kalibro_configurations.git -b v1.1.1 kalibro_configurations
+git clone https://github.com/mezuro/kalibro_configurations.git -b  "$KALIBRO_CONFIGURATIONS_VERSION" kalibro_configurations
 pushd kalibro_configurations
 psql -c "create role kalibro_configurations with createdb login password 'kalibro_configurations'" -U postgres
 cp config/database.yml.postgresql_sample config/database.yml
