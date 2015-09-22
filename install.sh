@@ -14,11 +14,11 @@ if [ -z "${ANALIZO_VERSION}" ]; then
 fi
 
 if  [ -z "${KALIBRO_CONFIGURATIONS_VERSION}" ]; then
-    KALIBRO_CONFIGURATIONS_VERSION='v1.1.1'
+    KALIBRO_CONFIGURATIONS_VERSION='stable'
 fi
 
 if [ -z "${KALIBRO_PROCESSOR_VERSION}" ]; then
-    KALIBRO_PROCESSOR_VERSION='v0.11.0'
+    KALIBRO_PROCESSOR_VERSION='stable'
 fi
 
 # Kalibro dependencies (including Analizo)
