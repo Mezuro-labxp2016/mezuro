@@ -34,14 +34,14 @@ fi
 git clone https://github.com/mezuro/kalibro_processor.git -b "$KALIBRO_PROCESSOR_VERSION" kalibro_processor
 pushd kalibro_processor
 psql -c "create role kalibro_processor with createdb login password 'kalibro_processor'" -U postgres
-cp config/database.yml.postgresql_sample config/database.yml
+cp config/database.yml.sample config/database.yml
 cp config/repositories.yml.sample config/repositories.yml
 
 export BUNDLE_GEMFILE=$PWD/Gemfile
 if [ -n "${CACHE_DIR}" ]; then
     bundle_dir="$CACHE_DIR/kalibro_processor/bundle"
     mkdir -p "$bundle_dir"
-    bundle install "${bundle_opts[@]}" --path="$bundle_dir" 
+    bundle install "${bundle_opts[@]}" --path="$bundle_dir"
 else
     bundle install "${bundle_opts[@]}"
 fi
@@ -62,7 +62,7 @@ export BUNDLE_GEMFILE=$PWD/Gemfile
 if [ -n "${CACHE_DIR+x}" ]; then
     bundle_dir="$CACHE_DIR/kalibro_configurations/bundle"
     mkdir -p "$bundle_dir"
-    bundle install "${bundle_opts[@]}" --path="$bundle_dir" 
+    bundle install "${bundle_opts[@]}" --path="$bundle_dir"
 else
     bundle install "${bundle_opts[@]}"
 fi
