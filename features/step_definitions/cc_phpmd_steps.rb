@@ -1,8 +1,12 @@
 Given(/^PHPMD is registered on Kolekti$/) do
-  pending
-  #Kolekti.register_collector(Kolekti::CcPhpMd::Collector.new)
+  Kolekti.register_collector(Kolekti::CcPhpMd::Collector)
 end
 
 Given(/^I have a set of wanted metrics for PHPMD$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  #acc_metric = FactoryGirl.build(:acc_metric)
+  #tac_metric = FactoryGirl.build(:total_abstract_classes_metric)
+  @wanted_metric_configurations = [
+  #  FactoryGirl.build(:metric_configuration, metric: acc_metric),
+  #  FactoryGirl.build(:metric_configuration, metric: tac_metric)
+  ]
 end
