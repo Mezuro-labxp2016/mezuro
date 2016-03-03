@@ -4,46 +4,46 @@ supported_metrics:
     scope:
   - name: CleanCode/ElseExpression
     code: ee
-    scope:
+    scope: hotspot
   - name: CleanCode/StaticAccess
     code: sa
-    scope:
+    scope: hotspot
   - name: Controversial/CamelCaseClassName
     code: cccn
-    scope:
-  - name: Controversial/CamelCaseMethodNa
+    scope: hotspot
+  - name: Controversial/CamelCaseMethodName
     code: ccm
-    scope:
+    scope: hotspot
   - name: Controversial/CamelCaseParameterName
     code: ccpan
-    scope:
+    scope: hotspot
   - name: Controversial/CamelCasePropertyName
     code: ccprn
-    scope:
+    scope: hotspot
   - name: Controversial/CamelCaseVariableName
     code: ccvn
-    scope:
+    scope: hotspot
   - name: Controversial/Superglobals
     code: sg
-    scope:
+    scope: hotspot
   - name: CyclomaticComplexity
     code: cc
-    scope:
+    scope: hotspot
   - name: Design/CouplingBetweenObjects
     code: cbo
-    scope:
+    scope: hotspot
   - name: Design/DepthOfInheritance
     code: doi
     scope:
   - name: Design/EvalExpression
     code: eex
-    scope:
+    scope: hotspot
   - name: Design/ExitExpression
     code: exe
     scope:
   - name: Design/GotoStatement
     code: gs
-    scope:
+    scope: hotspot
   - name: Design/LongClass
     code: lg
     scope:
@@ -55,7 +55,7 @@ supported_metrics:
     scope:
   - name: Design/NpathComplexity
     code: nc
-    scope:
+    scope: hotspot
   - name: Design/NumberOfChildren
     code: noc
     scope:
@@ -67,22 +67,22 @@ supported_metrics:
     scope:
   - name: Design/TooManyPublicMethods
     code: tmpm
-    scope:
+    scope: hotspot
   - name: Design/WeightedMethodCount
     code: wmc
-    scope:
+    scope: hotspot
   - name: ExcessivePublicCount
     code: epc
     scope:
   - name: Naming/BooleanGetMethodName
     code: bgmn
-    scope:
+    scope: hotspot
   - name: Naming/ConstantNamingConventions
     code: cnc
     scope:
   - name: Naming/ConstructorWithNameAsEnclosingClass
     code: cwnaec
-    scope:
+    scope: hotspot
   - name: Naming/LongVariable
     code: lv
     scope:
@@ -91,16 +91,16 @@ supported_metrics:
     scope:
   - name: Naming/ShortVariable
     code: sv
-    scope:
+    scope: hotspot
   - name: UnusedFormalParameter
     code: ufp
-    scope:
+    scope: hotspot
   - name: UnusedLocalVariable
     code: ulv
-    scope:
+    scope: hotspot
   - name: UnusedPrivateField
     code: upf
-    scope:
+    scope: hotspot
   - name: UnusedPrivateMethod
     code: upm
     scope:
