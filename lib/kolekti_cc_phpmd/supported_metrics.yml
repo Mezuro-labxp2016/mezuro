@@ -1,0 +1,106 @@
+supported_metrics:
+  - name: CleanCode/BooleanArgumentFlag
+    code: baf
+    scope:
+  - name: CleanCode/ElseExpression
+    code: ee
+    scope:
+  - name: CleanCode/StaticAccess
+    code: sa
+    scope:
+  - name: Controversial/CamelCaseClassName
+    code: cccn
+    scope:
+  - name: Controversial/CamelCaseMethodNa
+    code: ccm
+    scope:
+  - name: Controversial/CamelCaseParameterName
+    code: ccpan
+    scope:
+  - name: Controversial/CamelCasePropertyName
+    code: ccprn
+    scope:
+  - name: Controversial/CamelCaseVariableName
+    code: ccvn
+    scope:
+  - name: Controversial/Superglobals
+    code: sg
+    scope:
+  - name: CyclomaticComplexity
+    code: cc
+    scope:
+  - name: Design/CouplingBetweenObjects
+    code: cbo
+    scope:
+  - name: Design/DepthOfInheritance
+    code: doi
+    scope:
+  - name: Design/EvalExpression
+    code: eex
+    scope:
+  - name: Design/ExitExpression
+    code: exe
+    scope:
+  - name: Design/GotoStatement
+    code: gs
+    scope:
+  - name: Design/LongClass
+    code: lg
+    scope:
+  - name: Design/LongMethod
+    code: lm
+    scope:
+  - name: Design/LongParameterList
+    code: lpl
+    scope:
+  - name: Design/NpathComplexity
+    code: nc
+    scope:
+  - name: Design/NumberOfChildren
+    code: noc
+    scope:
+  - name: Design/TooManyFields
+    code: tmf
+    scope:
+  - name: Design/TooManyMethods
+    code: tmm
+    scope:
+  - name: Design/TooManyPublicMethods
+    code: tmpm
+    scope:
+  - name: Design/WeightedMethodCount
+    code: wmc
+    scope:
+  - name: ExcessivePublicCount
+    code: epc
+    scope:
+  - name: Naming/BooleanGetMethodName
+    code: bgmn
+    scope:
+  - name: Naming/ConstantNamingConventions
+    code: cnc
+    scope:
+  - name: Naming/ConstructorWithNameAsEnclosingClass
+    code: cwnaec
+    scope:
+  - name: Naming/LongVariable
+    code: lv
+    scope:
+  - name: Naming/ShortMethodName
+    code: smn
+    scope:
+  - name: Naming/ShortVariable
+    code: sv
+    scope:
+  - name: UnusedFormalParameter
+    code: ufp
+    scope:
+  - name: UnusedLocalVariable
+    code: ulv
+    scope:
+  - name: UnusedPrivateField
+    code: upf
+    scope:
+  - name: UnusedPrivateMethod
+    code: upm
+    scope:
