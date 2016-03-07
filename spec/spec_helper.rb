@@ -12,7 +12,7 @@ SimpleCov.start do
   coverage_dir 'coverage/rspec'
 end
 
-require 'kolekti_cc_phpmd'
+require 'kolekti/cc_phpmd'
 
 require 'factory_girl'
 FactoryGirl.find_definitions
