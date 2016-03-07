@@ -19,4 +19,18 @@ describe Kolekti::CcPhpMd::Collector do
       end
     end
   end
+
+  describe 'methods' do
+    describe 'initialize' do
+      let(:supported_metrics) { double }
+
+      it 'is expected to load the supported metrics' do
+        expect_any_instance_of(described_class).to receive(:parse_supported_metrics).with(
+          /\/metrics\.yml$/, 'CodeClimate PHPMD', [:PHP]) { supported_metrics }
+
+        subject = described_class.new
+        expect(subject.supported_metrics).to eq(supported_metrics)
+      end
+    end
+  end
 end
