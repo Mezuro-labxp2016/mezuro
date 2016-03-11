@@ -33,4 +33,25 @@ describe Kolekti::CcPhpMd::Collector do
       end
     end
   end
+
+  describe 'config' do
+    it 'is expected to create a CC configuration that will be used by the EnginesRunner' do
+      expect(Kolekti::CcPhpMd::Collector.config).to be_a(CC::Yaml::Nodes::Root)
+    end
+  end
+
+  describe 'collect_metrics' do
+    let(:persistence_strategy) { FactoryGirl.build(:persistence_strategy) }
+    let(:wanted_metric_configurations) { double }
+    let(:code_directory) { '/tmp' }
+    let(:runner) { double }
+
+    it 'is expected to instantiate the right CC objects and run the PHPMD collector' do
+      expect(Kolekti::CcPhpMd::Parser).to receive(:new).with(subject, wanted_metric_configurations, persistence_strategy)
+      expect(Dir).to receive(:chdir).with(code_directory).and_yield
+      expect_any_instance_of(CC::Analyzer::EnginesRunner).to receive(:run)
+
+      subject.collect_metrics(code_directory, wanted_metric_configurations, persistence_strategy)
+    end
+  end
 end
