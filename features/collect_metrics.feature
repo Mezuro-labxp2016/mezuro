@@ -10,5 +10,5 @@ Feature: Collect PHPMD metrics
     And I have a set of wanted metrics for PHPMD
     And the "https://github.com/anapaula/Arquigrafia-Laravel" repository is cloned
     When I request Kolekti to collect the wanted metrics
-    Then there should be tree metric results to be saved
-    And there should be tree metric results for all the wanted metrics
+    Then there should be hotspot metric results to be saved
+    And there should be hotspot metric results for all the wanted metrics
