@@ -18,6 +18,28 @@ describe Kolekti::CcPhpMd::Collector do
         end
       end
     end
+
+    describe 'create_cc_dir' do
+      let(:old_umask) { double }
+
+      it 'is expected to create /tmp/cc while setting the correct umask and permissions' do
+        expect(File).to receive(:umask).ordered.with(no_args) { old_umask }
+        expect(File).to receive(:umask).ordered.with(022)
+        expect(FileUtils).to receive(:mkdir_p).with('/tmp/cc', mode: 0755)
+        expect(File).to receive(:umask).ordered.with(old_umask)
+
+        described_class.create_cc_dir
+      end
+
+      it 'is expected restore the umask in case of error' do
+        expect(File).to receive(:umask).ordered.with(no_args) { old_umask }
+        expect(File).to receive(:umask).ordered.with(022)
+        expect(FileUtils).to receive(:mkdir_p).and_raise("error")
+        expect(File).to receive(:umask).ordered.with(old_umask)
+      
+        expect { described_class.create_cc_dir }.to raise_error("error")
+      end
+    end
   end
 
   describe 'methods' do
