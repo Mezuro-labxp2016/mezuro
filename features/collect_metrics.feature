@@ -11,4 +11,3 @@ Feature: Collect PHPMD metrics
     And the "https://github.com/anapaula/Arquigrafia-Laravel" repository is cloned
     When I request Kolekti to collect the wanted metrics
     Then there should be hotspot metric results to be saved
-    And there should be hotspot metric results for all the wanted metrics
