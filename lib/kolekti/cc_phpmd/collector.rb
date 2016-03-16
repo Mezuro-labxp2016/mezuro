@@ -39,6 +39,7 @@ module Kolekti
       end
 
       def collect_metrics(code_directory, wanted_metric_configurations, persistence_strategy)
+        FileUtils.chmod_R "a+rX", code_directory
         engine_registry = CC::Analyzer::EngineRegistry.new
         parser = Kolekti::CcPhpMd::Parser.new(self, wanted_metric_configurations, persistence_strategy)
 

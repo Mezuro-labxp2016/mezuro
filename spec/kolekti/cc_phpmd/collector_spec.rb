@@ -76,6 +76,7 @@ describe Kolekti::CcPhpMd::Collector do
     end
 
     it 'is expected to instantiate the right CC objects and run the PHPMD collector' do
+      expect(FileUtils).to receive(:chmod_R).with("a+rX", code_directory)
       expect(Kolekti::CcPhpMd::Parser).to receive(:new).with(subject, wanted_metric_configurations, persistence_strategy)
       expect(Dir).to receive(:chdir).with(code_directory).and_yield
       expect_any_instance_of(CC::Analyzer::EnginesRunner).to receive(:run)
