@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe Kolekti::CcPhpMd::Parser do
+  before :each do
+    expect(Kolekti::CcPhpMd::Collector).to receive(:create_cc_dir)
+  end
+
   let(:collector) { Kolekti::CcPhpMd::Collector.new }
   let(:wanted_metrics) { collector.supported_metrics.first(2) }
   let(:wanted_metric_configurations) {

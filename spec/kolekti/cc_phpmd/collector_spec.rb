@@ -10,6 +10,7 @@ describe Kolekti::CcPhpMd::Collector do
     describe 'available' do
       context 'with the collector available' do
         before do
+          expect(described_class).to receive(:create_cc_dir)
           expect(described_class).to receive(:system).with(/codeclimate/, any_args) { true }
         end
 
@@ -36,7 +37,7 @@ describe Kolekti::CcPhpMd::Collector do
         expect(File).to receive(:umask).ordered.with(022)
         expect(FileUtils).to receive(:mkdir_p).and_raise("error")
         expect(File).to receive(:umask).ordered.with(old_umask)
-      
+
         expect { described_class.create_cc_dir }.to raise_error("error")
       end
     end
@@ -49,6 +50,8 @@ describe Kolekti::CcPhpMd::Collector do
       it 'is expected to load the supported metrics' do
         expect_any_instance_of(described_class).to receive(:parse_supported_metrics).with(
           /\/metrics\.yml$/, 'CodeClimate PHPMD', [:PHP]) { supported_metrics }
+        expect(described_class).to receive(:create_cc_dir)
+
 
         subject = described_class.new
         expect(subject.supported_metrics).to eq(supported_metrics)
@@ -67,6 +70,10 @@ describe Kolekti::CcPhpMd::Collector do
     let(:wanted_metric_configurations) { double }
     let(:code_directory) { '/tmp' }
     let(:runner) { double }
+
+    before :each do
+      expect(described_class).to receive(:create_cc_dir)
+    end
 
     it 'is expected to instantiate the right CC objects and run the PHPMD collector' do
       expect(Kolekti::CcPhpMd::Parser).to receive(:new).with(subject, wanted_metric_configurations, persistence_strategy)
