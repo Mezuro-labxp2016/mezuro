@@ -3,5 +3,5 @@ machine:
     - docker
 
 dependencies:
-  override:
+  pre:
     - docker pull codeclimate/codeclimate
