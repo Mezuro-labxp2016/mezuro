@@ -47,8 +47,10 @@ else
 fi
 
 RAILS_ENV=local bundle exec rake db:setup db:migrate
-RAILS_ENV=local bundle exec rails s -p 8082 -d
-RAILS_ENV=local bundle exec bin/delayed_job start
+if ! [ "${KALIBRO_PROCESSOR_START}" = 0 ]; then
+    RAILS_ENV=local bundle exec rails s -p 8082 -d
+    RAILS_ENV=local bundle exec bin/delayed_job start
+fi
 popd
 unset BUNDLE_GEMFILE BUNDLE_PATH
 
@@ -68,6 +70,8 @@ else
 fi
 
 bundle exec rake db:setup db:migrate
-bundle exec rails s -p 8083 -d
+if ! [ "${KALIBRO_CONFIGURATIONS_START}" = 0 ]; then
+    bundle exec rails s -p 8083 -d
+fi
 popd
 unset BUNDLE_GEMFILE BUNDLE_PATH
