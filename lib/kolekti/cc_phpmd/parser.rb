@@ -18,10 +18,10 @@ module Kolekti
            raise Kolekti::CollectorError.new("Failed parsing CodeClimate JSON data")
          end
 
-         return if jsdata["type"] != "issue"
+         return true if jsdata["type"] != "issue"
 
          metric_configuration = @wanted_metric_configurations[jsdata["check_name"]]
-         return if metric_configuration.nil?
+         return true if metric_configuration.nil?
 
          location = jsdata["location"] || {}
          path = location["path"]
@@ -33,6 +33,7 @@ module Kolekti
 
          @persistence_strategy.create_hotspot_metric_result(metric_configuration, module_name_for_path(path),
                                                             line_number, message)
+         true
       end
 
       def failed(output)
