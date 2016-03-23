@@ -1,0 +1,10 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  pre:
+    # Workaround: replace docker command with one that ignores the --rm and --cap-drop options
+    - sudo cp scripts/docker-circle-ci /usr/local/bin/docker
+    - sudo chmod 755 /usr/local/bin/docker
+    - docker pull codeclimate/codeclimate-phpmd:latest

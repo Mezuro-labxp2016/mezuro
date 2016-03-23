@@ -1,0 +1,16 @@
+#!/bin/bash
+
+declare -a args=()
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --rm) ;;
+        --rm=true) ;;
+        --cap-drop) shift ;;
+        --cap-drop=*) ;;
+        *) args+=("$1") ;;
+    esac
+    shift
+done
+
+exec /usr/bin/docker "${args[@]}"

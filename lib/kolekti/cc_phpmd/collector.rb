@@ -26,7 +26,7 @@ module Kolekti
         # owned by root (that behavior is fortunately deprecated starting with Docker 1.9)
         create_cc_dir
 
-        system('codeclimate version', [:out, :err] => '/dev/null') ? true : false
+        system('docker inspect codeclimate/codeclimate-phpmd', [:out, :err] => '/dev/null') ? true : false
       end
 
       def initialize
