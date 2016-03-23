@@ -2,7 +2,7 @@
 
 The Kolekti Codeclimate PHPMD gem implements a collector for PHP issues using Codeclimate with Kolekti
 
-== Unreleased
+== v0.0.2 - 23/03/2016
 
 Fix parser write return value
 
