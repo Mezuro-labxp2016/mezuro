@@ -34,7 +34,7 @@ describe Kolekti::CcPhpMd::Parser do
 
         it 'is expected to ignore the entry' do
           expect(JSON).to receive(:parse).with(data) { jsdata }
-          subject.write(data)
+          expect(subject.write(data)).to be_truthy
           expect(persistence_strategy.hotspot_metric_results).to be_empty
         end
       end
@@ -44,7 +44,7 @@ describe Kolekti::CcPhpMd::Parser do
 
         it 'is expected to ignore the entry' do
           expect(JSON).to receive(:parse).with(data) { jsdata }
-          subject.write(data)
+          expect(subject.write(data)).to be_truthy
           expect(persistence_strategy.hotspot_metric_results).to be_empty
         end
       end
@@ -71,9 +71,9 @@ describe Kolekti::CcPhpMd::Parser do
          }
        }
 
-        it 'is expected to raise a CollectorError' do
+        it 'is expected to generate a result' do
           expect(JSON).to receive(:parse).with(data) { jsdata }
-          subject.write(data)
+          expect(subject.write(data)).to be_truthy
           expect(persistence_strategy.hotspot_metric_results).to include({
             :line => 1,
             :message => "description",
