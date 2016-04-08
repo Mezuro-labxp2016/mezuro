@@ -8,3 +8,4 @@ dependencies:
     - sudo cp scripts/docker-circle-ci /usr/local/bin/docker
     - sudo chmod 755 /usr/local/bin/docker
     - docker pull codeclimate/codeclimate-phpmd:latest
+    - gem install bundler

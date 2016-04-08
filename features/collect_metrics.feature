@@ -3,7 +3,7 @@ Feature: Collect PHPMD metrics
   As a Kolekti user
   I should be able to collect metrics using PHPMD
 
-  @wip @unregister_collectors @clear_repository_dir
+  @unregister_collectors @clear_repository_dir
   Scenario: Running, parsing and collecting results
     Given PHPMD is registered on Kolekti
     And a persistence strategy is defined
