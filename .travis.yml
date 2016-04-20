@@ -1,0 +1,15 @@
+language: ruby
+
+rvm:
+  - 2.3.0
+
+before_install:
+  - gem install bundler -v 1.11.2
+  - pip install radon
+
+notifications:
+  email:
+    recipients:
+      - mezuro-core@lists.ime.usp.br
+    on_success: change
+    on_failure: always
