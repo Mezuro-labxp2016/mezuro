@@ -7,6 +7,8 @@ SimpleCov.start do
   coverage_dir 'coverage/cucumber'
 end
 
+require 'byebug'
+
 # The gem itself
 require 'kolekti/radon'
 
