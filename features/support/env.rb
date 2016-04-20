@@ -9,3 +9,6 @@ end
 
 # The gem itself
 require 'kolekti/radon'
+
+require 'factory_girl'
+FactoryGirl.find_definitions

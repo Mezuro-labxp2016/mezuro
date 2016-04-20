@@ -11,3 +11,6 @@ end
 
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'kolekti/radon'
+
+require 'factory_girl'
+FactoryGirl.find_definitions
