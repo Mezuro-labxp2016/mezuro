@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "kolekti_radon"
   spec.version       = KolektiRadon::VERSION
   spec.authors       = ["Diego Araújo", "Daniel Miranda", "Rafael Reggiani Manzo"]
-  spec.email         = ["diegoamc@protonmail.ch", "danielkza2@gmail.com", "rr.manzo@gmail.com"]
+  spec.email         = ["diegoamc@protonmail.ch", "danielkza2@gmail.com", "rr.manzo@protonmail.com"]
 
   spec.summary       = %q{Metric collecting support for Python that serves Kolekti.}
   spec.homepage      = "https://github.com/mezuro/kolekti_radon.git"
