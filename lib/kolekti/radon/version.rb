@@ -1,3 +1,5 @@
-module KolektiRadon
-  VERSION = "0.0.1"
+module Kolekti
+  module Radon
+    VERSION = "0.0.1"
+  end
 end

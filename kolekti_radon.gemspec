@@ -5,7 +5,7 @@ require 'kolekti/radon/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "kolekti_radon"
-  spec.version       = KolektiRadon::VERSION
+  spec.version       = Kolekti::Radon::VERSION
   spec.authors       = ["Diego Araújo", "Daniel Miranda", "Rafael Reggiani Manzo"]
   spec.email         = ["diegoamc@protonmail.ch", "danielkza2@gmail.com", "rr.manzo@protonmail.com"]
 

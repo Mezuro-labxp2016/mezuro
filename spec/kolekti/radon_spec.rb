@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe KolektiRadon do
+describe Kolekti::Radon do
   it 'has a version number' do
-    expect(KolektiRadon::VERSION).not_to be nil
+    expect(Kolekti::Radon::VERSION).not_to be nil
   end
 end

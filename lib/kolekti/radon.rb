@@ -1,5 +1,5 @@
 require "kolekti/radon/version"
 
-module KolektiRadon
-  # Your code goes here...
+module Kolekti
+  module Radon; end
 end
