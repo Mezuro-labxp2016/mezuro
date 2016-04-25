@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Kolekti::Radon::Collector do
   describe 'class method' do
     describe 'available?' do
-      let(:command_params){ pending('set the system call commands') }
+      let(:command_params){ ['radon', '--version', [:out, :err] => '/dev/null'] }
 
       context 'with a successful call (system exit 0)' do
         it 'is expected to call the system executable and return true' do
