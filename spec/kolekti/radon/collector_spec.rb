@@ -45,39 +45,49 @@ describe Kolekti::Radon::Collector do
     end
 
     describe 'collect_metrics' do
-      let(:code_directory) { "/tmp/test" }
-      let(:output_path) { code_directory + '/radon843-8392-92849382--0.json' }
-      let(:tempfile) { instance_double(Tempfile) }
-      let(:wanted_metric_configurations) { double }
-      let(:persistence_strategy) { double }
-      let(:radon_params) { pending }
-
-      before :each do
-        expect(Tempfile).to receive(:new).with(['radon', '.json'], code_directory).and_return(tempfile)
-        expect(tempfile).to receive(:close!)
-        expect(Dir).to receive(:chdir).with(code_directory).and_yield
+      def metric_configuration_double
+        instance_double(KalibroClient::Entities::Configurations::MetricConfiguration)
       end
 
-      context 'when collecting is successful' do
-        xit 'is expected to collect and parse all metrics' do
-          expect(tempfile).to receive(:path).twice.and_return(output_path)
-          is_expected.to receive(:system).with(*radon_params).and_return(true)
-          expect(Kolekti::Radon::Parsers).to receive(:parse_all).with(output_path, wanted_metric_configurations,
-                                                                      persistence_strategy)
+      let(:code_directory) { "/tmp/test" }
+      let(:persistence_strategy) { double }
+
+      context 'with known metrics' do
+        let(:cc_parser) { instance_double(Kolekti::Radon::Parser::Cyclomatic) }
+        let(:mi_parser) { instance_double(Kolekti::Radon::Parser::Maintainability) }
+        let(:raw_parser) { instance_double(Kolekti::Radon::Parser::Raw) }
+        let(:cc_metric_configuration) { metric_configuration_double }
+        let(:mi_metric_configuration) { metric_configuration_double }
+        let(:raw_metric_configurations) {
+          {"loc" => metric_configuration_double, "sloc" => metric_configuration_double}
+        }
+        let(:wanted_metric_configurations) {
+          {"cc" => cc_metric_configuration, "mi" => mi_metric_configuration}.merge(raw_metric_configurations)
+        }
+
+        it 'is expected to collect and parse all metrics' do
+          expect(Kolekti::Radon::Parser::Cyclomatic).to receive(:new).
+            with([cc_metric_configuration], persistence_strategy).and_return(cc_parser)
+          expect(Kolekti::Radon::Parser::Maintainability).to receive(:new).
+            with([mi_metric_configuration], persistence_strategy).and_return(mi_parser)
+          expect(Kolekti::Radon::Parser::Raw).to receive(:new).
+            with(raw_metric_configurations.values, persistence_strategy).and_return(raw_parser)
+
+          expect(subject).to receive(:run_radon).with(code_directory, cc_parser)
+          expect(subject).to receive(:run_radon).with(code_directory, raw_parser)
+          expect(subject).to receive(:run_radon).with(code_directory, mi_parser)
 
           subject.collect_metrics(code_directory, wanted_metric_configurations, persistence_strategy)
         end
       end
 
-      context 'when collecting fails' do
-        xit 'is expected to raise a Collector Error' do
-          expect(tempfile).to receive(:path).once.and_return(output_path)
-          is_expected.to receive(:system).with(*radon_params).and_return(false)
-          expect(Kolekti::Radon::Parsers).to receive(:parse_all).never
+      context 'with an unknown metric' do
+        let(:wanted_metric_configurations) { { "whatever" => double } }
 
+        it 'is expected to raise an UnavailableMetricError' do
           expect {
             subject.collect_metrics(code_directory, wanted_metric_configurations, persistence_strategy)
-          }.to raise_error(Kolekti::CollectorError, 'Radon failed')
+          }.to raise_error(Kolekti::UnavailableMetricError, "Metric does not belong to Radon")
         end
       end
     end
