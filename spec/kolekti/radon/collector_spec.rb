@@ -35,7 +35,7 @@ describe Kolekti::Radon::Collector do
     describe 'initialize' do
       let(:supported_metrics) { double }
 
-      xit 'is expected to load the supported metrics' do
+      it 'is expected to load the supported metrics' do
         expect_any_instance_of(described_class).to receive(:parse_supported_metrics).with(
           /\/metrics\.yml$/, 'Radon', [:PYTHON]) { supported_metrics }
 
