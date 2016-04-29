@@ -137,5 +137,54 @@ describe Kolekti::Radon::Collector do
         end
       end
     end
+
+    describe 'run_radon' do
+      let(:command_params) { [['radon', 'raw', '.', '--json'], chdir: code_directory] }
+      let(:code_directory) { '/tmp/test'}
+      let(:parser) { instance_double(Kolekti::Radon::Parser::Raw, command: 'raw') }
+      let(:results) { instance_double(IO, pid: 1234) }
+      let(:radon_status) { 0 }
+
+      before :each do
+        expect(IO).to receive(:popen).with(*command_params).and_return(results).ordered
+        expect(results).to receive(:close).ordered
+        is_expected.to receive(:last_process_exitstatus).and_return(radon_status).ordered
+      end
+
+      context 'with a successful radon run' do
+        let(:parsed_results) { double }
+
+        context 'when the JSON is valid' do 
+          it 'is expected to call the parser with the results' do
+            expect(JSON).to receive(:load).with(results).and_return(parsed_results)
+            expect(parser).to receive(:parse).with(parsed_results)
+
+            subject.send(:run_radon, code_directory, parser)
+          end
+        end
+
+        context 'when the JSON is invalid' do
+          it 'is expected to raise an CollectorError' do
+            expect(JSON).to receive(:load).with(results).and_raise(JSON::JSONError)
+
+            expect {
+              subject.send(:run_radon, code_directory, parser)
+            }.to raise_error(Kolekti::CollectorError, 'Error while parsing Radon output')
+          end
+        end
+      end
+
+      context 'with a failed radon run' do
+        let(:radon_status) { 1 }
+
+        it 'is expected to raise an CollectorError' do
+          expect(JSON).to receive(:load).with(results)
+
+          expect {
+            subject.send(:run_radon, code_directory, parser)
+          }.to raise_error(Kolekti::CollectorError, 'Radon failed')
+        end
+      end
+    end
   end
 end
