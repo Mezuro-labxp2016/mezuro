@@ -1,8 +1,19 @@
+require 'kolekti/radon/parser'
+
 module Kolekti
   module Radon
     class Collector < Kolekti::Collector
       def self.available?
         system('radon', '--version', [:out, :err] => '/dev/null') ? true : false
+      end
+
+      def self.logger
+        if @logger.nil?
+          @logger = Logger.new(STDERR)
+          @logger.progname = 'kolekti/radon'
+        end
+
+        @logger
       end
 
       def initialize
@@ -23,7 +34,7 @@ module Kolekti
         end
 
         parsers_metric_configurations.each do |parser_class, metric_configurations|
-          parser = parser_class.new(metric_configurations, persistence_strategy)
+          parser = parser_class.new(metric_configurations, persistence_strategy, self.class.logger)
           run_radon(code_directory, parser)
         end
       end

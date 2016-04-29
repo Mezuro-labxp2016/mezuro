@@ -29,6 +29,14 @@ describe Kolekti::Radon::Collector do
         end
       end
     end
+
+    describe 'logger' do
+      it 'is expected to return a Logger with the progname set' do
+        result = described_class.logger
+        expect(result).to be_a(Logger)
+        expect(result.progname).to eq('kolekti/radon')
+      end
+    end
   end
 
   describe 'instance method' do
@@ -53,6 +61,7 @@ describe Kolekti::Radon::Collector do
       let(:persistence_strategy) { double }
 
       context 'with known metrics' do
+        let(:logger) { instance_double(Logger) }
         let(:cc_parser) { instance_double(Kolekti::Radon::Parser::Cyclomatic) }
         let(:mi_parser) { instance_double(Kolekti::Radon::Parser::Maintainability) }
         let(:raw_parser) { instance_double(Kolekti::Radon::Parser::Raw) }
@@ -66,12 +75,14 @@ describe Kolekti::Radon::Collector do
         }
 
         it 'is expected to collect and parse all metrics' do
+          expect(described_class).to receive(:logger).and_return(logger).exactly(3).times
+
           expect(Kolekti::Radon::Parser::Cyclomatic).to receive(:new).
-            with([cc_metric_configuration], persistence_strategy).and_return(cc_parser)
+            with([cc_metric_configuration], persistence_strategy, logger).and_return(cc_parser)
           expect(Kolekti::Radon::Parser::Maintainability).to receive(:new).
-            with([mi_metric_configuration], persistence_strategy).and_return(mi_parser)
+            with([mi_metric_configuration], persistence_strategy, logger).and_return(mi_parser)
           expect(Kolekti::Radon::Parser::Raw).to receive(:new).
-            with(raw_metric_configurations.values, persistence_strategy).and_return(raw_parser)
+            with(raw_metric_configurations.values, persistence_strategy, logger).and_return(raw_parser)
 
           expect(subject).to receive(:run_radon).with(code_directory, cc_parser)
           expect(subject).to receive(:run_radon).with(code_directory, raw_parser)
