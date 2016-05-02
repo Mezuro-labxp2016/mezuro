@@ -116,12 +116,12 @@ describe Kolekti::Radon::Collector do
 
         it 'is expected to fetch its default value from its parser' do
           expect(subject.default_value_from(metric_configuration)).to eq(
-            Kolekti::Radon::Parsers::PARSERS[:cc].default_value)
+            Kolekti::Radon::Parser::PARSERS[:cc].default_value)
         end
       end
 
       context 'with a metric with an invalid type' do
-        let(:metric_configuration) { pending }
+        let(:metric_configuration) { FactoryGirl.build(:metric_configuration) }
 
         it 'is expected to raise an UnavailableMetricError' do
           expect { subject.default_value_from(metric_configuration) }.to raise_error(Kolekti::UnavailableMetricError,
@@ -155,7 +155,7 @@ describe Kolekti::Radon::Collector do
       context 'with a successful radon run' do
         let(:parsed_results) { double }
 
-        context 'when the JSON is valid' do 
+        context 'when the JSON is valid' do
           it 'is expected to call the parser with the results' do
             expect(JSON).to receive(:load).with(results).and_return(parsed_results)
             expect(parser).to receive(:parse).with(parsed_results)
