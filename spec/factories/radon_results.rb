@@ -24,7 +24,8 @@ FactoryGirl.define do
              "name" => "Client",
              "type" => "class",
              "methods" => [
-               {"name" => "method1", "complexity" => 1.0},
+               {"name" => "method1", "complexity" => 1.0, "lineno" => 3},
+               {"name" => "method1", "complexity" => 2.0, "lineno" => 10},
                {"name" => "method2", "complexity" => 5.0}
              ]
            },

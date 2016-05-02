@@ -13,7 +13,10 @@ describe Kolekti::Radon::Parser::Cyclomatic do
 
     it 'is expected to parse the results and create tree metric results' do
       expect(persistence_strategy).to receive(:create_tree_metric_result).with(
-        cyclomatic_configuration, "app.models.repository.Client.method1", 1.0,
+        cyclomatic_configuration, "app.models.repository.Client.method1:3", 1.0,
+        KalibroClient::Entities::Miscellaneous::Granularity::METHOD)
+      expect(persistence_strategy).to receive(:create_tree_metric_result).with(
+        cyclomatic_configuration, "app.models.repository.Client.method1:10", 2.0,
         KalibroClient::Entities::Miscellaneous::Granularity::METHOD)
       expect(persistence_strategy).to receive(:create_tree_metric_result).with(
         cyclomatic_configuration, "app.models.repository.Client.method2", 5.0,

@@ -15,8 +15,7 @@ module Kolekti
         def parse(cc_output)
           metric_configuration = metric_configurations.first
 
-          pre_parse(cc_output).each do |module_name, result, granularity|
-            module_name = module_name + '.' + result['name']
+          parse_output(cc_output) do |module_name, result, granularity|
             value = result['complexity'].to_f
             persistence_strategy.create_tree_metric_result(
               metric_configuration, module_name, value, granularity)
@@ -26,27 +25,49 @@ module Kolekti
         private
 
         # This method checks for errors found by Radon, switches the valid results between METHOD and FUNCTION
-        # Returns an Enumerator of 3-element tuples of [module_name, result, granularity]
-        def pre_parse(cc_output)
-          Enumerator.new do |parsed_result|
-            cc_output.each do |file_name, results|
-              # If Radon couldn't parse the file we don't want to continue since the output is a error message
-              next if has_error?(file_name, results)
+        # Calls the passed block multiple times with (module_name, result, granularity)
+        def parse_output(cc_output, &block)
+          cc_output.each do |file_name, entries|
+            # If Radon couldn't parse the file we don't want to continue since the output is a error message
+            next if has_error?(file_name, entries)
 
-              file_module_name = self.class.parse_file_name(file_name)
-              results.each do |result|
-                if result['type'] == 'class'
-                  granularity = KalibroClient::Entities::Miscellaneous::Granularity::METHOD
-                  class_name = result['name']
+            file_module_name = self.class.parse_file_name(file_name)
+            functions = []
 
-                  result['methods'].each do |method|
-                    parsed_result << ["#{file_module_name}.#{class_name}", method, granularity]
-                  end
-                else
-                  next if result['type'] == 'method' # These entries are duplicated on Radon's output
-                  granularity = KalibroClient::Entities::Miscellaneous::Granularity::FUNCTION
-                  parsed_result << [file_module_name, result, granularity]
-                end
+            entries.each do |entry|
+              if entry['type'] == 'class'
+                class_name = entry['name']
+                class_module_name = "#{file_module_name}.#{class_name}"
+
+                parse_entries(entry['methods'], class_module_name,
+                              KalibroClient::Entities::Miscellaneous::Granularity::METHOD, &block)
+              elsif entry['type'] == 'method'
+                # These entries are duplicated on Radon's output
+                next
+              else
+                functions << entry
+              end
+            end
+
+            parse_entries(functions, file_module_name,
+                          KalibroClient::Entities::Miscellaneous::Granularity::FUNCTION, &block)
+          end
+        end
+
+        def parse_entries(entries, base_module_name, granularity)
+          # It's possible for multiple methods to be declared with the same name,
+          # even though they'll never be assigned to the same slots at runtime, such
+          # as when declaring properties in classes.
+          # Radon will produce the same name in those cases, so deal with them by
+          # appending the line number to any methods with the same module name
+          entries.group_by { |entry| entry['name'] }.each do |name, module_entries|
+            if module_entries.size == 1
+              module_name = "#{base_module_name}.#{name}"
+              yield module_name, module_entries.first, granularity
+            else
+              module_entries.each do |entry|
+                module_name = "#{base_module_name}.#{name}:#{entry['lineno']}"
+                yield module_name, entry, granularity
               end
             end
           end
