@@ -26,10 +26,8 @@ module Kolekti
       def collect_metrics(code_directory, wanted_metric_configurations, persistence_strategy)
         parsers_metric_configurations = Hash.new { |hash, key| hash[key] = [] }
 
-        wanted_metric_configurations.each do |code, metric_configuration|
-          parser = Kolekti::Radon::Parser::PARSERS[code]
-          raise Kolekti::UnavailableMetricError.new("Metric does not belong to Radon") if parser.nil?
-
+        wanted_metric_configurations.each do |_, metric_configuration|
+          parser = metric_configuration_parser(metric_configuration)
           parsers_metric_configurations[parser] << metric_configuration
         end
 
@@ -41,6 +39,11 @@ module Kolekti
 
       def clean(code_directory, wanted_metric_configurations)
         super
+      end
+
+
+      def default_value_from(metric_configuration)
+        metric_configuration_parser(metric_configuration).default_value
       end
 
       private
@@ -68,6 +71,24 @@ module Kolekti
         $?.exitstatus
       end
       #:nocov:
+
+      def metric_configuration_parser(metric_configuration)
+        metric = metric_configuration.metric
+        if metric.type != 'NativeMetricSnapshot'
+          raise Kolekti::UnavailableMetricError.new('Invalid Metric configuration type')
+        end
+
+        parser = nil
+        if metric.metric_collector_name == self.name
+          parser = Kolekti::Radon::Parser::PARSERS[metric.code.to_sym]
+        end
+
+        if parser.nil?
+          raise Kolekti::UnavailableMetricError.new('Metric configuration does not belong to Radon')
+        end
+
+        parser
+      end
     end
   end
 end

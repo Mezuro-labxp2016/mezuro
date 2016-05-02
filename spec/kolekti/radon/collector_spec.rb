@@ -65,11 +65,12 @@ describe Kolekti::Radon::Collector do
         let(:cc_parser) { instance_double(Kolekti::Radon::Parser::Cyclomatic) }
         let(:mi_parser) { instance_double(Kolekti::Radon::Parser::Maintainability) }
         let(:raw_parser) { instance_double(Kolekti::Radon::Parser::Raw) }
-        let(:cc_metric_configuration) { metric_configuration_double }
-        let(:mi_metric_configuration) { metric_configuration_double }
-        let(:raw_metric_configurations) {
-          {"loc" => metric_configuration_double, "sloc" => metric_configuration_double}
-        }
+        let(:cc_metric_configuration) { FactoryGirl.build(:cyclomatic_metric_configuration) }
+        let(:mi_metric_configuration) { FactoryGirl.build(:maintainability_metric_configuration) }
+        let(:raw_metric_configurations) { {
+          "loc" => FactoryGirl.build(:lines_of_code_metric_configuration),
+          "lloc" => FactoryGirl.build(:logical_lines_of_code_metric_configuration)
+        } }
         let(:wanted_metric_configurations) {
           {"cc" => cc_metric_configuration, "mi" => mi_metric_configuration}.merge(raw_metric_configurations)
         }
@@ -93,12 +94,12 @@ describe Kolekti::Radon::Collector do
       end
 
       context 'with an unknown metric' do
-        let(:wanted_metric_configurations) { { "whatever" => double } }
+        let(:wanted_metric_configurations) { { "whatever" => FactoryGirl.build(:metric_configuration) } }
 
         it 'is expected to raise an UnavailableMetricError' do
           expect {
             subject.collect_metrics(code_directory, wanted_metric_configurations, persistence_strategy)
-          }.to raise_error(Kolekti::UnavailableMetricError, "Metric does not belong to Radon")
+          }.to raise_error(Kolekti::UnavailableMetricError)
         end
       end
     end
@@ -113,7 +114,7 @@ describe Kolekti::Radon::Collector do
       context 'with a known metric' do
         let(:metric_configuration) { pending }
 
-        xit 'is expected to fetch its default value from its parser' do
+        it 'is expected to fetch its default value from its parser' do
           expect(subject.default_value_from(metric_configuration)).to eq(
             Kolekti::Radon::Parsers::PARSERS[:pending].default_value)
         end
@@ -122,7 +123,7 @@ describe Kolekti::Radon::Collector do
       context 'with a metric with an invalid type' do
         let(:metric_configuration) { pending }
 
-        xit 'is expected to raise an UnavailableMetricError' do
+        it 'is expected to raise an UnavailableMetricError' do
           expect { subject.default_value_from(metric_configuration) }.to raise_error(Kolekti::UnavailableMetricError,
                                                                                      'Invalid Metric configuration type')
         end
@@ -131,7 +132,7 @@ describe Kolekti::Radon::Collector do
       context 'with a metric that does not belong to Radon' do
         let(:metric_configuration) { FactoryGirl.build(:metric_configuration, metric: FactoryGirl.build(:native_metric)) }
 
-        xit 'is expected to raise an UnavailableMetricError' do
+        it 'is expected to raise an UnavailableMetricError' do
           expect { subject.default_value_from(metric_configuration) }.to raise_error(Kolekti::UnavailableMetricError,
                                                                                      'Metric configuration does not belong to Radon')
         end

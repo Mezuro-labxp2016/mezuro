@@ -1,7 +1,7 @@
 describe Kolekti::Radon::Parser::Base do
   let(:persistence_strategy) { FactoryGirl.build(:persistence_strategy) }
-  let(:loc_configuration) { FactoryGirl.build(:lines_of_code_configuration) }
-  let(:lloc_configuration) { FactoryGirl.build(:logical_lines_of_code_configuration) }
+  let(:loc_configuration) { FactoryGirl.build(:lines_of_code_metric_configuration) }
+  let(:lloc_configuration) { FactoryGirl.build(:logical_lines_of_code_metric_configuration) }
 
   subject {
     described_class.new([loc_configuration, lloc_configuration], persistence_strategy, double)

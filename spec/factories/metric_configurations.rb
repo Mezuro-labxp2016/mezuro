@@ -34,7 +34,7 @@ FactoryGirl.define do
 
     factory :cyclomatic_metric_configuration, traits: [:cyclomatic]
     factory :maintainability_metric_configuration, traits: [:maintainability]
-    factory :lines_of_code_configuration, traits: [:lines_of_code]
-    factory :logical_lines_of_code_configuration, traits: [:logical_lines_of_code]
+    factory :lines_of_code_metric_configuration, traits: [:lines_of_code]
+    factory :logical_lines_of_code_metric_configuration, traits: [:logical_lines_of_code]
   end
 end
