@@ -26,7 +26,7 @@ module Kolekti
       def collect_metrics(code_directory, wanted_metric_configurations, persistence_strategy)
         parsers_metric_configurations = Hash.new { |hash, key| hash[key] = [] }
 
-        wanted_metric_configurations.each do |_, metric_configuration|
+        wanted_metric_configurations.each_value do |metric_configuration|
           parser = metric_configuration_parser(metric_configuration)
           parsers_metric_configurations[parser] << metric_configuration
         end
@@ -38,7 +38,7 @@ module Kolekti
       end
 
       def clean(code_directory, wanted_metric_configurations)
-        super
+        # no need to do anything, we only use pipes during collection
       end
 
 
