@@ -4,12 +4,12 @@ module Kolekti
   module Radon
     module Parser
       class Cyclomatic < Base
-        def command
-          'cc'
+        def self.default_value
+          1.0
         end
 
-        def default_value
-          1.0
+        def command
+          'cc'
         end
 
         def parse(cc_output)

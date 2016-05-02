@@ -30,7 +30,7 @@ describe Kolekti::Radon::Parser::Base do
 
   describe 'default_value' do
     it 'is expected to raise a NotImplementedError' do
-      expect { subject.default_value }.to raise_error(NotImplementedError)
+      expect { described_class.default_value }.to raise_error(NotImplementedError)
     end
   end
 end

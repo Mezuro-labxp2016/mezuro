@@ -7,9 +7,9 @@ describe Kolekti::Radon::Parser::Maintainability do
     end
   end
 
-  describe 'default_value' do
+  describe 'self.default_value' do
     it 'is expected to return 0.0' do
-      expect(subject.default_value).to eq(100.0)
+      expect(described_class.default_value).to eq(100.0)
     end
   end
 end

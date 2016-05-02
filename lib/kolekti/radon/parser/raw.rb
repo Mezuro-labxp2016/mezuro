@@ -2,12 +2,12 @@ module Kolekti
   module Radon
     module Parser
       class Raw < Base
-        def command
-          'raw'
+        def self.default_value
+          0.0
         end
 
-        def default_value
-          0.0
+        def command
+          'raw'
         end
       end
     end

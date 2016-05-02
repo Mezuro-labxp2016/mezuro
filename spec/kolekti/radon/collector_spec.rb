@@ -105,18 +105,18 @@ describe Kolekti::Radon::Collector do
     end
 
     describe 'clean' do
-      xit 'is expected to be implemented' do
+      it 'is expected to be implemented' do
         expect { subject.clean(nil, nil) }.to_not raise_error
       end
     end
 
     describe 'default_value_from' do
       context 'with a known metric' do
-        let(:metric_configuration) { pending }
+        let(:metric_configuration) { FactoryGirl.build(:cyclomatic_metric_configuration) }
 
         it 'is expected to fetch its default value from its parser' do
           expect(subject.default_value_from(metric_configuration)).to eq(
-            Kolekti::Radon::Parsers::PARSERS[:pending].default_value)
+            Kolekti::Radon::Parsers::PARSERS[:cc].default_value)
         end
       end
 

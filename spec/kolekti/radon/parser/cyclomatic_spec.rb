@@ -34,9 +34,9 @@ describe Kolekti::Radon::Parser::Cyclomatic do
     end
   end
 
-  describe 'default_value' do
+  describe 'self.default_value' do
     it 'is expected to return 1.0' do
-      expect(subject.default_value).to eq(1.0)
+      expect(described_class.default_value).to eq(1.0)
     end
   end
 end
