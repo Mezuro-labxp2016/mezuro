@@ -33,14 +33,11 @@ module Kolekti
 
             file_module_name = self.class.parse_file_name(file_name)
             functions = []
+            classes = []
 
             entries.each do |entry|
               if entry['type'] == 'class'
-                class_name = entry['name']
-                class_module_name = "#{file_module_name}.#{class_name}"
-
-                parse_entries(entry['methods'], class_module_name,
-                              KalibroClient::Entities::Miscellaneous::Granularity::METHOD, &block)
+                classes << entry
               elsif entry['type'] == 'method'
                 # These entries are duplicated on Radon's output
                 next
@@ -51,10 +48,15 @@ module Kolekti
 
             parse_entries(functions, file_module_name,
                           KalibroClient::Entities::Miscellaneous::Granularity::FUNCTION, &block)
+
+            parse_entries(classes, file_module_name) do |class_module_name, class_entry, _|
+              parse_entries(class_entry['methods'], class_module_name,
+                            KalibroClient::Entities::Miscellaneous::Granularity::METHOD, &block)
+            end
           end
         end
 
-        def parse_entries(entries, base_module_name, granularity)
+        def parse_entries(entries, base_module_name, granularity=nil)
           # It's possible for multiple methods to be declared with the same name,
           # even though they'll never be assigned to the same slots at runtime, such
           # as when declaring properties in classes.

@@ -15,18 +15,21 @@ describe Kolekti::Radon::Parser::Cyclomatic do
     let(:raw_results) { FactoryGirl.build(:radon_results).results[:cc] }
 
     it 'is expected to parse the results and create tree metric results' do
-      expect(persistence_strategy).to receive(:create_tree_metric_result).with(
-        cyclomatic_configuration, "app.models.repository.Client.method1:3", 1.0,
-        KalibroClient::Entities::Miscellaneous::Granularity::METHOD)
-      expect(persistence_strategy).to receive(:create_tree_metric_result).with(
-        cyclomatic_configuration, "app.models.repository.Client.method1:10", 2.0,
-        KalibroClient::Entities::Miscellaneous::Granularity::METHOD)
-      expect(persistence_strategy).to receive(:create_tree_metric_result).with(
-        cyclomatic_configuration, "app.models.repository.Client.method2", 5.0,
-        KalibroClient::Entities::Miscellaneous::Granularity::METHOD)
-      expect(persistence_strategy).to receive(:create_tree_metric_result).with(
-        cyclomatic_configuration, "app.models.repository.callFunction", 3.0,
-        KalibroClient::Entities::Miscellaneous::Granularity::FUNCTION)
+      [
+        ['app.models.repository.Test:10.method:11',    1.0, :METHOD],
+        ['app.models.repository.Test:10.method:14',    2.0, :METHOD],
+        ['app.models.repository.Test:19.method',       1.0, :METHOD],
+        ['app.models.repository.Test:19.other_method', 2.0, :METHOD],
+        ['app.models.repository.test:1',               1.0, :FUNCTION],
+        ['app.models.repository.test:4',               2.0, :FUNCTION]
+      ].each do |module_name, complexity, granularity|
+        expect(persistence_strategy).to receive(:create_tree_metric_result).with(
+          cyclomatic_configuration,
+          module_name,
+          complexity,
+          KalibroClient::Entities::Miscellaneous::Granularity.const_get(granularity)
+        )
+      end
 
       expect(logger).to receive(:debug).with(/error parsing file Rakefile/)
 
