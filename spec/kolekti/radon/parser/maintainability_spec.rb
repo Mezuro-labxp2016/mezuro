@@ -1,3 +1,6 @@
+require 'spec_helper'
+require 'kolekti/radon/parser'
+
 describe Kolekti::Radon::Parser::Maintainability do
   subject { described_class.new(double, double, double) }
 

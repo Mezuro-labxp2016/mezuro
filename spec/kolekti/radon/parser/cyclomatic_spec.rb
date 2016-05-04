@@ -1,3 +1,6 @@
+require 'spec_helper'
+require 'kolekti/radon/parser'
+
 describe Kolekti::Radon::Parser::Cyclomatic do
   let(:logger) { instance_double(Logger) }
   let(:persistence_strategy) { FactoryGirl.build(:persistence_strategy) }

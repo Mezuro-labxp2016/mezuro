@@ -1,3 +1,4 @@
+require 'kolekti/parser'
 require 'kolekti/radon/parser/base'
 require 'kolekti/radon/parser/cyclomatic'
 require 'kolekti/radon/parser/maintainability'

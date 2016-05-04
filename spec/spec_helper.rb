@@ -10,6 +10,7 @@ SimpleCov.start do
 end
 
 require 'byebug'
+require 'kalibro_client'
 
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'kolekti/radon'

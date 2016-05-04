@@ -1,3 +1,6 @@
+require 'spec_helper'
+require 'kolekti/radon/parser'
+
 describe Kolekti::Radon::Parser::Base do
   let(:persistence_strategy) { FactoryGirl.build(:persistence_strategy) }
   let(:loc_configuration) { FactoryGirl.build(:lines_of_code_metric_configuration) }
