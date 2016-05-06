@@ -1,16 +1,16 @@
-= Revision history for Kolekti Codeclimate PHPMD
+# Revision history for Kolekti Codeclimate PHPMD
 
 The Kolekti Codeclimate PHPMD gem implements a collector for PHP issues using Codeclimate with Kolekti
 
-== v0.0.2 - 23/03/2016
+## v0.0.2 - 23/03/2016
 
-Fix parser write return value
+* Fix parser write return value
 
-== v0.0.1 - 23/03/2016
+## v0.0.1 - 23/03/2016
 
-Initial release
+* Initial release
 
-===
+---
 
 Kolekti Codeclimate PHPMD.
 Copyright (C) 2015  The Mezuro Team
