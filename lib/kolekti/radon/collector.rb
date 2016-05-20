@@ -4,7 +4,9 @@ module Kolekti
   module Radon
     class Collector < Kolekti::Collector
       def self.available?
-        system('radon', '--version', [:out, :err] => '/dev/null') ? true : false
+        # FIXME: below is the better form of writing this, but it does not look compatible with ruby 2.1.5 and 2.0.0
+        # system('radon', '--version', [:out, :err] => '/dev/null') ? true : false
+        system('radon', '--version', out: '/dev/null', err: '/dev/null') ? true : false
       end
 
       def self.logger
