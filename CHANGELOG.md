@@ -4,6 +4,8 @@ Kolekti Radon is the metric collector for Python using the radon library.
 
 ## Unreleased
 
+## v0.0.2 - 24/05/2016
+
 Support Ruby 2.0.0 and 2.1.5
 
 ## v0.0.1 - 06/05/2016
