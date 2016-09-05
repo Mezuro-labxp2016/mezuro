@@ -1,0 +1,5 @@
+-
+  hosts: mezuro-dev
+  become: yes
+  roles:
+    - database
