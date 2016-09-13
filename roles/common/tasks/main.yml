@@ -12,3 +12,4 @@
   with_items:
     - vim
     - htop
+    - curl
