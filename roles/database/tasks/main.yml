@@ -4,7 +4,18 @@
   with_items:
     - postgresql
     - postgresql-contrib
+    - python-psycopg2
+
+-
+  name: Install configuration file
+  template:
+    src=pg_hba.conf
+    dest=/etc/postgresql/9.1/main/pg_hba.conf
 
 -
   name: Start postgres
-  service: name=postgresql enabled=yes state=started
+  service: name=postgresql enabled=yes state=restarted
+
+-
+  name: create kalibro_configurations user
+  postgresql_user: name=kalibro_configurations password=kalibro_configurations role_attr_flags=CREATEDB,NOSUPERUSER,LOGIN
