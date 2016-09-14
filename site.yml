@@ -4,3 +4,5 @@
   roles:
     - database
     - ruby
+    - kalibro_configurations
+    - kalibro_processor

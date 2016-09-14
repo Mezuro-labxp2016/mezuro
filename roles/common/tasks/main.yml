@@ -10,6 +10,8 @@
   name: install common packages
   apt: name={{ item }} state=present
   with_items:
+    - build-essential
+    - git
     - vim
     - htop
     - curl

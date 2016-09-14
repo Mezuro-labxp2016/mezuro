@@ -1,0 +1,20 @@
+-
+  name: Install deps
+  apt: name={{ item }} state=present
+  with_items:
+    - postgresql-server-dev-9.4
+    - libpq-dev
+    - ruby-dev
+    - libsqlite3-dev
+
+-
+  name: Clone kalibro_configurations
+  git: repo=https://github.com/Mezuro-labxp2016/kalibro_configurations.git dest=/vagrant/src/kalibro_configurations accept_hostkey=yes version=update_setup_script
+
+-
+  name: kalibro_configurations setup
+  command: bin/setup chdir=/vagrant/src/kalibro_configurations
+
+-
+  name: running kalibro_configurations tests
+  command: rake chdir=/vagrant/src/kalibro_configurations

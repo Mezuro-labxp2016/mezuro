@@ -10,7 +10,7 @@
   name: Install configuration file
   template:
     src=pg_hba.conf
-    dest=/etc/postgresql/9.1/main/pg_hba.conf
+    dest=/etc/postgresql/9.4/main/pg_hba.conf
 
 -
   name: Start postgres
@@ -19,3 +19,7 @@
 -
   name: create kalibro_configurations user
   postgresql_user: name=kalibro_configurations password=kalibro_configurations role_attr_flags=CREATEDB,NOSUPERUSER,LOGIN
+
+-
+  name: create kalibro_processor user
+  postgresql_user: name=kalibro_processor password=kalibro_processor role_attr_flags=CREATEDB,NOSUPERUSER,LOGIN

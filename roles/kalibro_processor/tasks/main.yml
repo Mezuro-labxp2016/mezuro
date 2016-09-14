@@ -1,0 +1,19 @@
+-
+  name: Install deps
+  apt: name={{ item }} state=present
+  with_items:
+    - postgresql-server-dev-9.4
+    - libpq-dev
+    - ruby-dev
+
+-
+  name: Clone kalibro_processor
+  git: repo=https://github.com/mezuro/kalibro_processor.git dest=/vagrant/src/kalibro_processor accept_hostkey=yes
+
+-
+  name: kalibro_processor setup
+  command: bin/setup chdir=/vagrant/src/kalibro_configurations
+
+-
+  name: running kalibro_processor tests
+  command: rake chdir=/vagrant/src/kalibro_configurations
