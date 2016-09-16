@@ -9,7 +9,7 @@
 
 -
   name: Clone kalibro_configurations
-  git: repo=https://github.com/Mezuro-labxp2016/kalibro_configurations.git dest=/vagrant/src/kalibro_configurations accept_hostkey=yes version=update_setup_script
+  git: repo=https://github.com/mezuro/kalibro_configurations.git dest=/vagrant/src/kalibro_configurations accept_hostkey=yes
 
 -
   name: kalibro_configurations setup
