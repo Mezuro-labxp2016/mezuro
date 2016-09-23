@@ -1,4 +1,16 @@
 -
+  name: Download analizo key
+  shell: wget -O - http://www.analizo.org/download/signing-key.asc | apt-key add -
+
+-
+  name: Install sources.list
+  copy: src=sources.list dest=/etc/apt/sources.list
+
+-
+  name: Update repository cache
+  command: apt update
+
+-
   name: Install deps
   apt: name={{ item }} state=present
   with_items:
@@ -8,6 +20,7 @@
     - python-pip
     - subversion
     - docker.io
+    - analizo
 
 -
   name: Start docker
@@ -26,7 +39,7 @@
 
 -
   name: Clone kalibro_processor
-  git: repo=https://github.com/Mezuro-labxp2016/kalibro_processor.git dest=/vagrant/src/kalibro_processor accept_hostkey=yes version=fix_setup
+  git: repo=https://github.com/mezuro/kalibro_processor.git dest=/vagrant/src/kalibro_processor accept_hostkey=yes
 
 -
   name: kalibro_processor setup
