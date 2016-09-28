@@ -16,12 +16,12 @@
 
 -
   name: Clone Prezento
-  git: repo=https://github.com/Mezuro-labxp2016/prezento.git dest=/vagrant/src/prezento accept_hostkey=yes version=fix_setup
+  git: repo=https://github.com/Mezuro-labxp2016/prezento.git dest=/vagrant/src/prezento accept_hostkey=yes version=fix_setup force=yes
 
 -
   name: prezento setup
   command: bin/setup chdir=/vagrant/src/prezento
 
 -
-  name: running prezento tests
-  command: rake chdir=/vagrant/src/prezento
+  name: start prezento
+  command: rails s -d -b 0.0.0.0
