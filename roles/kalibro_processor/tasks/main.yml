@@ -47,6 +47,6 @@
 
 -
   name: start kalibro_processor
-  shell: if [ -f tmp/pids/server.pid ]; then kill `cat tmp/pids/server.pid`; fi; rails s -d -p 8082
+  shell: if [ -f tmp/pids/server.pid ]; then kill `cat tmp/pids/server.pid`; fi; rails s -b 0.0.0.0 -d -p 8082
   args:
     chdir: /vagrant/src/kalibro_processor
