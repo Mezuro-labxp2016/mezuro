@@ -16,10 +16,6 @@
   command: bin/setup chdir=/vagrant/src/kalibro_configurations
 
 -
-  name: running kalibro_configurations tests
-  command: rake chdir=/vagrant/src/kalibro_configurations
-
--
   name: start kalibro_configurations
   shell: if [ -f tmp/pids/server.pid ]; then kill `cat tmp/pids/server.pid`; fi; rails s -d -p 8083
   args:
