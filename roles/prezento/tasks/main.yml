@@ -15,10 +15,6 @@
   command: ./install_phantomjs.sh chdir=/tmp
 
 -
-  name: Clone Prezento
-  git: repo=https://github.com/Mezuro-labxp2016/prezento.git dest=/vagrant/src/prezento accept_hostkey=yes version=fix_setup force=yes
-
--
   name: prezento setup
   command: bin/setup chdir=/vagrant/src/prezento
 

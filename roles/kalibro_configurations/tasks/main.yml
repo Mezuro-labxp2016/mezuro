@@ -8,10 +8,6 @@
     - libsqlite3-dev
 
 -
-  name: Clone kalibro_configurations
-  git: repo=https://github.com/mezuro/kalibro_configurations.git dest=/vagrant/src/kalibro_configurations accept_hostkey=yes
-
--
   name: kalibro_configurations setup
   command: bin/setup chdir=/vagrant/src/kalibro_configurations
 

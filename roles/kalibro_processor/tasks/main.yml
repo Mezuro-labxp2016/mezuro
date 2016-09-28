@@ -38,10 +38,6 @@
   pip: name=radon
 
 -
-  name: Clone kalibro_processor
-  git: repo=https://github.com/mezuro/kalibro_processor.git dest=/vagrant/src/kalibro_processor accept_hostkey=yes
-
--
   name: kalibro_processor setup
   command: bin/setup chdir=/vagrant/src/kalibro_processor
 
