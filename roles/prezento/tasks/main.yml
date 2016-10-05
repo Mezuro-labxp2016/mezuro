@@ -20,6 +20,6 @@
 
 -
   name: start prezento
-  shell: if [ -f tmp/pids/server.pid ]; then kill `cat tmp/pids/server.pid`; fi; sleep 2; rails s -b 0.0.0.0 -d
+  shell: if [ -f tmp/pids/server.pid ]; then kill `cat tmp/pids/server.pid`; fi; sleep 5; rails s -b 0.0.0.0 -d
   args:
     chdir: /vagrant/src/prezento

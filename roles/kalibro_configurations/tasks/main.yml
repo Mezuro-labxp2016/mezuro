@@ -13,6 +13,6 @@
 
 -
   name: start kalibro_configurations
-  shell: if [ -f tmp/pids/server.pid ]; then kill `cat tmp/pids/server.pid`; fi; sleep 2; rails s -b 0.0.0.0 -d -p 8083
+  shell: if [ -f tmp/pids/server.pid ]; then kill `cat tmp/pids/server.pid`; fi; sleep 5; rails s -b 0.0.0.0 -d -p 8083
   args:
     chdir: /vagrant/src/kalibro_configurations
