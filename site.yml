@@ -4,6 +4,6 @@
   roles:
     - database
     - ruby
-    - kalibro_configurations
-    - kalibro_processor
-    - prezento
+    - {role: kalibro_configurations, tags: ['kalibro_configurations']}
+    - {role: kalibro_processor, tags: ['kalibro_processor']}
+    - {role: prezento, tags: ['prezento']}
