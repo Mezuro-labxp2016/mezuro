@@ -21,3 +21,5 @@
 -
   name: start prezento
   command: rails s -d -b 0.0.0.0
+  args:
+    chdir: /vagrant/src/prezento
