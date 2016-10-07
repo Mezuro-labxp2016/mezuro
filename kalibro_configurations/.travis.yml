@@ -1,0 +1,30 @@
+language: ruby
+rvm:
+  - 2.3.1
+  - 2.0.0-p598 # CentOS 7
+  - 2.1.5 # Debian 8
+
+addons:
+    postgresql: "9.3"
+
+cache: bundler
+
+before_script:
+  - cp config/database.yml.sample config/database.yml
+  - psql -c "create role kalibro_configurations with createdb login password 'kalibro_configurations'" -U postgres
+  - bundle exec rake db:setup db:migrate
+  - bundle exec rake tmp:create
+  - export BUNDLE_GEMFILE=$PWD/Gemfile
+  - export CODECLIMATE_REPO_TOKEN=6bf95f17eb6f76312a655acafc20c446a81f601c2f9a2c5d3771c95712da11d4
+
+script:
+  - bundle exec rake spec
+  - bundle exec rake cucumber
+  - bundle exec rake rubocop
+
+notifications:
+  email:
+    recipients:
+      - mezuro-core@lists.ime.usp.br
+    on_success: change
+    on_failure: always

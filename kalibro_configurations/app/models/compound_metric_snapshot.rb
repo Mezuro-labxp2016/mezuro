@@ -1,0 +1,2 @@
+class CompoundMetricSnapshot < MetricSnapshot
+end

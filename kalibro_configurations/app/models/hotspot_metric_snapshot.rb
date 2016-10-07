@@ -1,0 +1,2 @@
+class HotspotMetricSnapshot < NativeMetricSnapshot
+end

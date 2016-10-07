@@ -1,0 +1,40 @@
+# PostgreSQL
+#   gem install pg
+#
+#   Ensure the PostgreSQL gem is defined in your Gemfile
+#   gem 'pg'
+development: &development
+  adapter: postgresql
+  encoding: unicode
+  database: kalibro_configurations_development
+  pool: 5
+  username: kalibro_configurations
+  password: kalibro_configurations
+  template: template0 # avoid encoding mismatch issue by ignoring the default template
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test: &test
+  adapter: postgresql
+  encoding: unicode
+  database: kalibro_configurations_test
+  pool: 5
+  username: kalibro_configurations
+  password: kalibro_configurations
+  template: template0
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: kalibro_configurations_production
+  pool: 5
+  username: kalibro_configurations
+  password: kalibro_configurations
+  template: template0
+
+local:
+  <<: *development
+
+cucumber:
+  <<: *test

@@ -1,0 +1,2 @@
+class NativeMetricSnapshot < MetricSnapshot
+end
