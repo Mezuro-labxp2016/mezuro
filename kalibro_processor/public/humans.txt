@@ -1,0 +1,33 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    Copyright 2013-2016
+    --------------
+
+      Daniel Paulino Alves (danpaulalves at gmail.com)
+      Diego de Araújo Martinez Camarinha (diegoamc90 at gmail.com)
+      Eduardo Silva Araújo (duduktamg at hotmail.com>)
+      Heitor Reis Ribeiro (marcheing at gmail.com)
+      Paulo Meirelles (paulo at softwarelivre.org)
+      Rafael Reggiani Manzo (rr.manzo at gmail.com)
+
+# THANKSs
+
+    Former team members
+    ---------------------------------------------------------
+
+      Fellipe Souto Sampaio (fllsouto at gmail.com)
+      Alessandro Palmeira (alessandro.palmeira at gmail.com)
+      Renan Fichberg (rfichberg at gmail.com)
+
+# TECHNOLOGY COLOPHON
+
+    Ruby On Rails 4
+      RSpec
+      FactoryGirl
+      Capybara
+      Cucumber
+      ShouldaMatchers
+      Simplecov
