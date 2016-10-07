@@ -1,0 +1,22 @@
+<% metric_configuration = metric_result.metric_configuration %>
+<% unless metric_configuration.metric.type == "HotspotMetricSnapshot" %>
+  <% range_snapshot = find_range_snapshot(metric_result)
+     metric_name = metric_configuration.metric.name
+  %>
+  <tr>
+    <td><%= link_to "<i class='icon-align-left'></i> #{metric_name}".html_safe, "",
+              onclick: "new Module.Graphic('container#{metric_result.id}', '#{metric_name}', '#{module_result.id}')",
+              id: "metric_#{module_result.id}",
+              remote: true %>
+    </td>
+    <td><%= format_grade(metric_result.value) %></td>
+    <td><%= metric_configuration.weight %></td>
+    <td><% if range_snapshot.nil? %>Missing range<% else %><span style="color: #<%= range_snapshot.color %>"><%= range_snapshot.label %></span><% end %></td>
+  </tr>
+  <tr id="container<%= metric_result.id %>" style="display: none">
+    <td colspan="4">
+      <span id="loader_container<%= metric_result.id %>"><%= image_tag 'loader.gif' %> <%= t('repository.show.loading') %></span>
+      <canvas id="container<%= metric_result.id %>" class="graphic_container" style="display: none"></canvas>
+    </td>
+  </tr>
+<% end %>

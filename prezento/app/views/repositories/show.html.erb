@@ -1,0 +1,114 @@
+<div class="page-header">
+  <h1><%= @repository.name %></h1>
+</div>
+
+<p>
+  <strong><%= Repository.human_attribute_name('description') %>:</strong>
+  <%= @repository.description %>
+</p>
+
+<p>
+  <strong><%= Repository.human_attribute_name('license') %>:</strong>
+  <%= @repository.license %>
+</p>
+
+<p>
+  <strong><%= Repository.human_attribute_name('type') %>:</strong>
+  <%= @repository.scm_type %>
+</p>
+
+<p>
+  <strong><%= Repository.human_attribute_name('address') %>:</strong>
+  <%= @repository.address %>
+</p>
+
+<p>
+  <strong><%= Repository.human_attribute_name('branch') %>:</strong>
+  <%= @repository.branch %>
+</p>
+
+<p>
+  <strong><%= Repository.human_attribute_name('period') %>:</strong>
+  <%= periodicity_option(@repository.period) %>
+</p>
+
+<p>
+  <strong><%= KalibroConfiguration.model_name.human %>:</strong>
+  <%= @kalibro_configuration.name %>
+</p>
+
+<% if repository_owner? @repository.id %>
+  <strong><%= t('repository.show.notify_push_url') %>:</strong>
+  <input id="notify_url" value="<%= repository_notify_push_url(@repository.id) %>" readonly="">
+
+  <button id="btn" data-clipboard-target="#notify_url">
+    <i class="fa fa-copy" alt="Copy to clipboard"></i>
+  </button>
+<% end %>
+
+<p><strong> <%= t('repository.show.date_processing') %>: </strong></p>
+
+<%= form_tag(repository_state_with_date_path(@repository.id), method: "get", remote: true) do %>
+  <p>
+    <%= label_tag :day, t("day") %>:
+    <%= select_tag(:day, options_for_select(day_options), :style => "width:55px; margin-top:5px") %>
+    <%= label_tag :month, t("month") %>:
+    <%= select_tag(:month, options_for_select(month_options), :style => "width:55px; margin-top:5px") %>
+    <%= label_tag :year, t("year") %>:
+    <%= select_tag(:year, options_for_select(year_options), :style => "width:70px; margin-top:5px") %>
+    <%= submit_tag(t('search'), class: 'btn btn-info', style: 'margin-bottom:5px', onClick: "Repository.State.set_loader('#{image_tag 'loader.gif'} #{j(t('repository.show.loading'))}')") %>
+  </p>
+<% end %>
+
+<hr/>
+
+<div id="repository-accordion">
+  <div id="processing-accordion">
+    <h3 class="jquery-ui-accordion"><%= t('repository.show.processing_information') %></h3>
+    <div id="processing_information"><%= image_tag 'loader.gif' %> <%= t('repository.show.loading') %></div>
+  </div>
+
+  <div id="module-accordion">
+    <h3 class="jquery-ui-accordion"><%= t('repository.show.modules_tree') %></h3>
+    <div id="module_tree"><%= image_tag 'loader.gif' %> <%= t('repository.show.loading') %></div>
+  </div>
+
+  <div id="hotspot-metric-accordion">
+    <h3 class="jquery-ui-accordion"><%= t('repository.show.hotspot_metric_results') %></h3>
+    <div id="hotspot_metric_results"><%= image_tag 'loader.gif' %> <%= t('repository.show.loading') %></div>
+  </div>
+
+  <div id="metric-accordion">
+    <h3 class="jquery-ui-accordion"><%= t('repository.show.metric_results') %></h3>
+    <div id="metric_results"><%= image_tag 'loader.gif' %> <%= t('repository.show.loading') %></div>
+  </div>
+</div>
+
+<!-- Copy to clipboard -->
+<%= javascript_include_tag "https://cdn.rawgit.com/zenorocha/clipboard.js/v1.5.10/dist/clipboard.min.js" %>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+      (new Repository.State(<%= @repository.id %>)).poll_state('');
+      new Clipboard('#btn');
+    });
+
+  //Loads the accordion
+  $(function() {
+    $( "#repository-accordion > div" ).accordion({
+      heightStyle: "content",
+      collapsible: true,
+    });
+    $("#module-accordion").accordion({active: false})
+    $("#hotspot-metric-accordion").accordion({active: false})
+    $("#metric-accordion").accordion({active: false})
+  });
+</script>
+
+<hr/>
+
+<%= link_to t('back'),  repositories_path, class: 'btn btn-default' %>
+<% if repository_owner? @repository.id %>
+  <%= link_to t('repository.show.reprocess'), repository_process_path(@repository.id),  class: 'btn btn-info' %>
+  <%= link_to t('destroy'), repository_path(@repository.id), method: :delete, data: { confirm: t('sure_destroy', model: Repository.model_name.human) }, class: 'btn btn-danger' %>
+<% end %>

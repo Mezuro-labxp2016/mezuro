@@ -1,0 +1,45 @@
+<div class="jumbotron">
+  <p><h1><%= t('title_home_index') %></h1></p>
+    <%= t('body_home_index_html') %>
+  <p>
+    <%= t('body_feedback_home_index_html', href: link_to('feedback', 'https://github.com/mezuro/mezuro/issues', target: '_blank')) %>
+  </p>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4">
+      <h2><%= t('latest_projects') %></h2>
+
+      <ul>
+        <% cache action_suffix: 'latest_projects' do %>
+          <% latest_projects(5).each do |project| %>
+            <li><%= link_to(project.name, project_path(project.id)) %></li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+    <div class="col-md-4">
+      <h2><%= t('latest_repositories') %></h2>
+
+      <ul>
+        <% cache action_suffix: 'latest_repositories' do %>
+          <% latest_repositories(5).each do |repository| %>
+            <li><%= link_to(repository.name, repository_path(repository.id)) %></li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+    <div class="col-md-4">
+      <h2><%= t('latest_configurations') %></h2>
+
+      <ul>
+        <% cache action_suffix: 'latest_configurations' do %>
+          <% latest_configurations(5).each do |configuration| %>
+            <li><%= link_to(configuration.name, kalibro_configuration_path(configuration.id)) %></li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

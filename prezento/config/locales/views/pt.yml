@@ -1,0 +1,102 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+pt:
+  #commons
+  show: "Mostrar"
+  edit_model: "Editar %{model}"
+  edit: "Editar"
+  edit_user: "Editar Usuário"
+  end: "Fim"
+  the: "A"
+  of_the: "dos"
+  and: "e"
+  name: "Nome"
+  label: "Rótulo"
+  scope: "Escopo"
+  code: "Código"
+  reading_group: "Grupo de Leitura"
+  reading_groups: "Grupos de Leitura"
+  project: "Projeto"
+  projects: "Projetos"
+  configuration: "Configuração"
+  configurations: "Configurações"
+  module: "Módulo"
+  weight: "Peso"
+  description: "Descrição"
+  beginning: "Início"
+  range: "Intervalo"
+  ranges: "Intervalos"
+  language: "Linguagem"
+  new_project: "Novo Projeto"
+  no_description: "Não há descrição disponível."
+  welcome: "Bem-Vindo"
+  metrics: "Métricas"
+  tree_metrics: "Métricas escalares"
+  tree_metric: "Métrica escalar"
+  hotspot_metrics: "Métricas de Hotspot"
+  hotspot_metric: "Métrica de Hotspot"
+  value: "Valor"
+  threshold: "limite"
+  granularity: "Granularidade"
+  repositories: "Repositórios"
+  type: "Tipo"
+  address: "Endereço"
+  script: "Script"
+  add_range: "Adicionar Intervalo"
+  back: "Voltar"
+  destroy: "Destruir"
+  save: "Salvar"
+  color: "Cor"
+  a: "A"
+  state: "Estado"
+  license: "Licença"
+  periodicity: "Periodicidade"
+  reprocess: "Reprocessar"
+  requisites: "Requisitos"
+  have: "Ter"
+  signed_up: "inscrever-se"
+  signed_in: "logado"
+  be: "ser"
+  steps: "Passos"
+  details: "Detalhes"
+  instroduction: "Introdução"
+  keywords: "Palavras-chave"
+  reading: "Leitura"
+  readings: "Leituras"
+  analysis: "Análise"
+  feedback: "feedback"
+  update: "Atualizar"
+  configuring: "Configurando"
+  password: "Senha"
+  password_confirmation: "Confirmar Senha"
+  remember_me: "Lembrar-me"
+  day: "Dia"
+  month: "Mês"
+  year: "Ano"
+  search: "Procurar"
+  new:
+    male: "Novo"
+    female: "Nova"
+  create: "Criar %{model}"
+  add: "Adicionar"
+  sure_destroy: "Você tem certeza que deseja apagar este(a) %{model}?"
+  language: "Idioma"

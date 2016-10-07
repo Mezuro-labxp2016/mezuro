@@ -1,0 +1,63 @@
+<div class="page-header">
+  <h1><%= t('.sign_up', :default => "Sign up") %></h1>
+</div>
+
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :class => "form-inline" }) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="row margin-left-none">
+    <div class="form-table col-md-9">
+      <div class="form-row">
+        <div class="field-container">
+          <%= f.label :name, class: 'control-label' %><br />
+          <%= f.text_field :name, :autofocus => true, class: 'text-field form-control' %>
+        </div>
+        <div class="help-container">
+          <p>
+            <%= t('.your_full_name')%>
+          </p>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="field-container">
+          <%= f.label :email, class: 'control-label' %><br />
+          <%= f.email_field :email, class: 'text-field form-control' %>
+        </div>
+        <div class="help-container">
+          <p>
+            <%= t('.your_email_is_our_communication_channel')%>
+          </p>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="field-container">
+          <%= f.label :password, class: 'control-label' %><br />
+          <%= f.password_field :password, class: 'text-field form-control' %>
+        </div>
+        <div class="help-container">
+          <p>
+            <%= t('.password_instructions')%>
+          </p>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="field-container">
+          <%= f.label :password_confirmation, class: 'control-label' %><br />
+          <%= f.password_field :password_confirmation, class: 'text-field form-control' %>
+        </div>
+        <div class="help-container">
+          <p>
+            <%= t('.confirm_your_password')%>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row margin-left-none" style="margin-top: 20px">
+    <%= f.submit t('.sign_up', :default => "Sign up"), class: 'btn btn-primary col-md-2' %>
+  </div>
+<% end %>

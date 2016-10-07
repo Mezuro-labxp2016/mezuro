@@ -1,0 +1,10 @@
+pt:
+  activemodel:
+    models:
+      processing:
+        one: "Processamento"
+        other: "Processamentos"
+    attributes:
+      processing:
+        state: "Estado"
+        creation_date: "Data de Criação"

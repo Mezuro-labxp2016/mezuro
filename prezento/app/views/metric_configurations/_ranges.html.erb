@@ -1,0 +1,19 @@
+<tr>
+  <td>
+    <div>
+      <a class="popover_element" rel="popover" data-placement="left" data-original-title="Comments" data-content="<%= kalibro_range.comments %>"><span id="comment-icon" class="fa fa-comment"></span></a>
+      <span style="color: #<%= kalibro_range.color %>"><%= kalibro_range.label %></span>
+    </div>
+  </td>
+  <td><%= format_boundary(kalibro_range.beginning) %></td>
+  <td><%= format_boundary(kalibro_range.end) %></td>
+  <td>
+    <% if kalibro_configuration_owner? @metric_configuration.kalibro_configuration_id %>
+      <%= link_to t('edit'), edit_kalibro_configuration_metric_configuration_kalibro_range_path(
+                  @metric_configuration.kalibro_configuration_id, @metric_configuration.id, kalibro_range.id), class: 'btn btn-info' %>
+      <%= link_to t('destroy'), kalibro_configuration_metric_configuration_kalibro_range_path(@metric_configuration.kalibro_configuration_id,
+      @metric_configuration.id, kalibro_range.id), method: :delete, data: { confirm: t('want_destroy_range') },
+      class: 'btn btn-danger' %>
+    <% end %>
+  </td>
+</tr>

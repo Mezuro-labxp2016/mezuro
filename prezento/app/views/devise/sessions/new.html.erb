@@ -1,0 +1,53 @@
+<div class="page-header">
+  <h1><%= t('.sign_in', :default => "Sign in") %></h1>
+</div>
+
+<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "form-inline" }) do |f| %>
+  <div class="row margin-left-none">
+    <div class="form-table col-md-9">
+      <div class="form-row">
+        <div class="field-container">
+          <%= f.label :email, class: 'control-label' %>
+          <%= f.email_field :email, :autofocus => true, tabindex: 1, class: 'text-field form-control' %>
+        </div>
+        <div class="help-container">
+          <p>
+            <%= t('.same_email') %>
+          </p>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="field-container">
+          <%= f.label :password, class: 'control-label' %>
+          <%= f.password_field :password, class: 'text-field form-control', tabindex: 2 %>
+        </div>
+        <div class="help-container">
+          <p>
+            <%= t('.forgot_password_link_html', link: link_to("link", "/users/password/new")) %>
+          </p>
+        </div>
+      </div>
+
+      <% if devise_mapping.rememberable? -%>
+        <div class="form-row">
+          <div class="field-container">
+            <label>
+              <%= f.check_box :remember_me, class: "checkbox" %> <%= f.label :remember_me %>
+            </label>
+          </div>
+          <div class="help-container">
+            <p>
+              <%= t('.stay_logged_in')%>
+            </p>
+          </div>
+        </div>
+      <% end -%>
+    </div>
+  </div>
+
+  <div class="row margin-left-none" style="margin-top: 20px">
+    <%= f.submit t('.sign_in', :default => "Sign in"), class: 'btn btn-primary', :tabindex => 3 %>
+    <%= render "devise/shared/links" %>
+  </div>
+<% end %>

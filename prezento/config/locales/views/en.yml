@@ -1,0 +1,101 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+en:
+  #commons
+  show: "Show"
+  edit_model: "Edit %{model}"
+  edit: "Edit"
+  edit_user: "Edit User"
+  end: "End"
+  the: "The"
+  of_the: "of the"
+  and: "and"
+  name: "Name"
+  label: "Label"
+  scope: "Scope"
+  code: "Code"
+  reading_group: "Reading Group"
+  reading_groups: "Reading Groups"
+  configuration: "Configuration"
+  configurations: "Configurations"
+  module: "Module"
+  weight: "Weight"
+  description: "Description"
+  beginning: "Beginning"
+  ranges: "Ranges"
+  range: "Range"
+  language: "Language:"
+  no_description: "There is no description available"
+  welcome: "Welcome"
+  metrics: "Metrics"
+  tree_metrics: "Tree Metrics"
+  tree_metric: "Tree Metric"
+  hotspot_metrics: "Hotspot Metrics"
+  hotspot_metric: "Hotspot Metric"
+  value: "Value"
+  threshold: "Threshold"
+  granularity: "Granularity"
+  repositories: "Repositories"
+  type: "Type"
+  address: "Address"
+  script: "script"
+  add_range: "Add Range"
+  back: "Back"
+  destroy: "Destroy"
+  save: "Save"
+  color: "Color"
+  a: "A"
+  state: "State"
+  license: "License"
+  periodicity: "Periodicity"
+  reprocess: "Reprocess"
+  requisites: "Requisites"
+  have: "Have"
+  signed_up: "signed up"
+  signed_in: "signed in"
+  be: "Be"
+  steps: "Steps"
+  details: "Details"
+  instroduction: "Introduction"
+  keywords: "Keywords"
+  reading: "Reading"
+  readings: "Readings"
+  analysis: "Analysis"
+  feedback: "feedback"
+  update: "Update"
+  configuring: "Configuring"
+  analysis: "Analysis"
+  password: "Password"
+  configuring: "Configuring"
+  password_confirmation: "Password Confirmation"
+  remember_me: "Remember me"
+  day: "Day"
+  month: "Month"
+  year: "Year"
+  search: "Search"
+  new:
+    male: "New"
+    female: "New"
+  create: "Create %{model}"
+  add: "Add"
+  sure_destroy: "Are you sure that you want to destroy this %{model}?"
+  language: "Language"

@@ -1,0 +1,33 @@
+<div class="page-header">
+  <h1><%= t('new_metric_configurations') %></h1>
+</div>
+
+<p>
+  <b><%= t('metric_base_tool_name') %>:</b> <%= @metric_configuration.metric.metric_collector_name %>
+</p>
+
+<p>
+  <b><%= t('metric') %>:</b> <%= @metric_configuration.metric.name %>
+</p>
+
+<p>
+  <b><%= t('description') %>:</b> <%= @metric_configuration.metric.description.nil? ? "No description available." : @metric_configuration.metric.description %>
+</p>
+
+<p>
+  <b><%= t('language') %>:</b> <%= @metric_configuration.metric.languages.to_s %>
+</p>
+
+<p>
+  <b><%= t('metric_scope') %>:</b> <%= t(@metric_configuration.metric.scope.to_s, scope: 'scopes') %>
+</p>
+
+<br>
+
+<%= form_for(@metric_configuration, :url => kalibro_configuration_metric_configurations_path(@kalibro_configuration.id)) do |f| %>
+  <%= render partial: 'form', locals: {f: f} %>
+  <div class="row margin-left-none" style="margin-top: 20px">
+  	<%= f.submit t('save'), class: 'btn btn-primary' %>
+    <%= link_to t('back'),  kalibro_configuration_choose_metric_path(@kalibro_configuration.id), class: 'btn btn-default' %>
+	</div>
+<% end %>

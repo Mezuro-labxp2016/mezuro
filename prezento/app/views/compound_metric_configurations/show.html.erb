@@ -1,0 +1,80 @@
+<div class="page-header">
+  <h1><%=@metric_configuration.metric.name %></h1>
+</div>
+
+<p>
+  <strong> <%= t('description') %>:</strong>
+  <% if @metric_configuration.metric.description.nil? %>
+    <%= t('no_description') %>
+  <% else %>
+    <%= @metric_configuration.metric.description %>
+  <% end %>
+</p>
+
+<p>
+  <strong> <%= t('script') %>:</strong>
+  <%= @metric_configuration.metric.script %>
+</p>
+
+<p>
+  <strong> <%= t('scope') %>:</strong>
+  <%= @metric_configuration.metric.scope %>
+</p>
+
+<p>
+  <strong> <%= t('code') %>:</strong>
+  <%= @metric_configuration.metric.code %>
+</p>
+
+<p>
+  <strong> <%= t('weight') %>:</strong>
+  <%= @metric_configuration.weight %>
+</p>
+
+<p>
+  <strong> <%= t('metric_configurations_aggregation') %>:</strong>
+  <%= @metric_configuration.aggregation_form %>
+</p>
+
+<p>
+  <strong> <%= t('metric_configurations_reading_group') %>:</strong>
+  <%= @reading_group.name %>
+</p>
+
+<hr>
+
+<h2>  <%= t('ranges') %> </h2>
+<% if kalibro_configuration_owner? @metric_configuration.kalibro_configuration_id %>
+  <%= link_to t_action(:add, KalibroRange), kalibro_configuration_metric_configuration_new_kalibro_range_path(@metric_configuration.kalibro_configuration_id,
+      @metric_configuration.id), class: 'btn btn-info' %>
+<% end %>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th> <%= t('label') %> </th>
+      <th> <%= t('beginning') %> </th>
+      <th> <%= t('end') %> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @kalibro_ranges.empty? %>
+      <%= render partial: 'metric_configurations/no_ranges' %>
+    <% else %>
+      <%= render partial: 'metric_configurations/ranges', collection: @kalibro_ranges, as: :kalibro_range %>
+    <% end %>
+  </tbody>
+</table>
+
+<hr>
+
+<p>
+ <%= link_to t('back'), kalibro_configuration_path(@metric_configuration.kalibro_configuration_id), class: 'btn btn-default' %>
+<% if kalibro_configuration_owner? @metric_configuration.kalibro_configuration_id %>
+      <%= link_to t_action(:destroy, MetricConfiguration), kalibro_configuration_metric_configuration_path(@metric_configuration.kalibro_configuration_id,
+      @metric_configuration.id), method: :delete, data: { confirm: t('want_destroy_metric_configuration') },
+      class: 'btn btn-danger' %>
+ <% end %>
+</p>
+
+

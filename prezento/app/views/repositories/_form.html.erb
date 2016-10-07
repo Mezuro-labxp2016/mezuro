@@ -1,0 +1,113 @@
+<%= render :partial => 'shared/form_errors', :locals => {:object => @repository} %>
+
+
+<div class="row margin-left-none">
+  <div class="form-table col-md-9">
+
+    <div class="form-row">
+      <div class="field-container">
+        <%= f.label :name, class: 'control-label' %>
+        <%= f.text_field :name, :required => true, class: 'text-field form-control' %>
+      </div>
+      <div class="help-container">
+        <p>
+          <%= t('activemodel.hints.repository.name') %>
+        </p>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="field-container">
+        <%= f.label :description, class: 'control-label' %>
+        <%= f.text_area :description, class: 'text-area form-control' %>
+      </div>
+      <div class="help-container">
+        <p>
+          <%= t('activemodel.hints.repository.description') %>
+        </p>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="field-container">
+        <%= f.label :license, class: 'control-label' %>
+        <%= f.select( :license, license_options, class: 'text-area form-control' ) %>
+      </div>
+      <div class="help-container">
+        <p>
+          <%= t('activemodel.hints.repository.license') %>
+        </p>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="field-container">
+        <%= f.label :scm_type, class: 'control-label' %>
+        <%= f.select( :scm_type, @repository_types, {}, class: 'tooltip-control', onchange: "_repository_branch.toggle();" ) %>
+      </div>
+      <div class="help-container">
+        <p>
+          <%= t('activemodel.hints.repository.scm_type') %>
+        </p>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="field-container">
+        <%= f.label :address, class: 'control-label' %>
+        <%= f.text_field :address, :required => true, class: 'text-field form-control', onchange: "_repository_branch.fetch(this.value);" %>
+      </div>
+      <div class="help-container">
+        <p>
+          <%= t('activemodel.hints.repository.address') %>
+        </p>
+      </div>
+    </div>
+
+    <div id="branches">
+      <div class="form-row">
+        <div class="field-container">
+          <%= f.label :branch, class: 'control-label' %>
+          <%= f.select :branch, []%>
+        </div>
+        <div class="help-container">
+          <p>
+            <%= t('activemodel.hints.repository.address') %>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="field-container">
+        <%= f.label :period, class: 'control-label' %>
+        <%= f.select( :period, periodicity_options, class: 'tooltip-control' ) %>
+      </div>
+      <div class="help-container">
+        <p>
+          <%= t('activemodel.hints.repository.period') %>
+        </p>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="field-container">
+        <%= f.label :kalibro_configuration_id, KalibroConfiguration.model_name.human, class: 'control-label' %>
+        <%= f.select( :kalibro_configuration_id, @configurations, class: 'tooltip-control' ) %>
+      </div>
+      <div class="help-container">
+        <p>
+          <%= t('activemodel.hints.repository.kalibro_configuration', configuration_href: link_to(KalibroConfiguration.model_name.human, "http://mezuro.github.io/tutorial/2016/04/04/tutorial-keywords.html#configuration", target: "_blank")).html_safe %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row margin-left-none" style="margin-top: 20px">
+  <%= f.submit t('save'), class: 'btn btn-primary' %>
+  <%= link_to t('back'),  projects_path, class: 'btn btn-default' %>
+</div>
+
+<script type="text/javascript">
+  var _repository_branch = new Repository.Branch;
+</script>

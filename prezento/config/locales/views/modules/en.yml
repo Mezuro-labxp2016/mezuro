@@ -1,0 +1,15 @@
+en:
+  value: "Value"
+  threshold: "Threshold"
+  only_point_printed_chart: "There is only one point and it will not be printed into a chart."
+  activemodel:
+    models:
+      kalibro_module:
+        one: "Module"
+        other: "Modules"
+    attributes:
+      metric_configuration:
+        metric: "Metric"
+        weight: "Weight"
+        aggregation_form: "Aggregation Form"
+        reading_group_id: "Reading Group"

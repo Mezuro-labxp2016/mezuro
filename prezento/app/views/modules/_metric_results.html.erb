@@ -1,0 +1,16 @@
+<table class="table table-hover metric_results">
+  <thead>
+    <tr>
+      <th><%= t('activemodel.attributes.metric_result.metric') %></th>
+      <th><%= t('activemodel.attributes.metric_result.value') %></th>
+      <th><%= t('activemodel.attributes.metric_result.weight') %></th>
+      <th><%= t('activemodel.attributes.metric_result.threshold') %></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% cache("#{@root_module_result.id}_results") do %>
+      <%= render partial: 'metric_result', collection: @root_module_result.tree_metric_results, locals: {module_result: @root_module_result} %>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,42 @@
+<%= render :partial => 'shared/form_errors', :locals => {:object => @metric_configuration} %>
+<div class="row margin-left-none">
+  <div class="form-table col-md-9">
+
+    <%= f.fields_for :metric do |metric| %>
+    <%= render partial: "metric_options", :locals => {:f => metric, :metric => @metric_configuration.metric} %>
+    <% end %>
+
+    <div class="form-row">
+      <div class="field-container">
+        <%= f.label :weight, compound_metric_human_attribute_name('weight'), class: 'control-label' %>
+        <%= f.text_field :weight, :required => true, class: 'text-field form-control' %>
+      </div>
+      <div class="help-container">
+        <p>
+          <%= t('calculate_weighted_average_html', :href => link_to(t('module'), "http://mezuro.github.io/tutorial/2016/04/04/tutorial-keywords.html#metric", target: "_blank")) %>
+        </p>
+      </div>
+    </div>
+
+    <% if @metric_configuration.persisted? %>
+      <%= hidden_field_tag(:reading_group_id, @metric_configuration.reading_group_id) %>
+      <%= hidden_field_tag(:kalibro_configuration_id, @metric_configuration.kalibro_configuration_id) %>
+      <%= link_to t('back'), kalibro_configuration_path(@metric_configuration.kalibro_configuration_id), class: 'btn btn-default' %>
+    <% else %>
+      <div class="form-row">
+        <div class="field-container">
+          <%= f.label :reading_group_id, ReadingGroup.model_name.human, class: 'control-label' %>
+          <%= f.select( :reading_group_id, reading_group_options, {class: 'form-control'} ) %>
+        </div>
+        <div class="help-container">
+          <p>
+            <%= t('associated_metric_configuration_form_html', :href => link_to(t('reading_group'), "http://mezuro.github.io/tutorial/2016/04/04/tutorial-keywords.html#reading-group", target: "_blank")) %>
+          </p>
+        </div>
+      </div>
+      <%= f.hidden_field(:kalibro_configuration_id, value: @kalibro_configuration.id) %>
+      <%= link_to t('back'), kalibro_configuration_path(@kalibro_configuration.id), class: 'btn btn-default' %>
+    <% end %>
+    <%= f.submit t('save'), class: 'btn btn-primary' %>
+  </div>
+</div>

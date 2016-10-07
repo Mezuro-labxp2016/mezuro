@@ -1,0 +1,18 @@
+<p>
+  <strong><%= t('activemodel.attributes.processing.state') %>:</strong>
+  <%= @processing.state %>
+</p>
+
+<p>
+  <strong><%= t('activemodel.attributes.processing.creation_date') %>:</strong>
+  <%= @processing.created_at.strftime("%Y/%m/%d at %Hh%M (%z)") %>
+</p>
+
+<% unless @processing.process_times.nil? %>
+  <% @processing.process_times.each do |process_time| %>
+    <p>
+      <strong><%= process_time.state %> time:</strong>
+      <%= humanize_elapsed_time(process_time.time) %>
+    </p>
+  <% end %>
+<% end %>
