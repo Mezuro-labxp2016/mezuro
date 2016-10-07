@@ -1,0 +1,9 @@
+[submodule "src/prezento"]
+	path = src/prezento
+	url = https://github.com/mezuro/prezento.git
+[submodule "src/kalibro_processor"]
+	path = src/kalibro_processor
+	url = https://github.com/mezuro/kalibro_processor
+[submodule "src/kalibro_configurations"]
+	path = src/kalibro_configurations
+	url = https://github.com/mezuro/kalibro_configurations

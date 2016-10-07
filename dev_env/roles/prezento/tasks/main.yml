@@ -1,0 +1,25 @@
+-
+  name: Install deps
+  apt: name={{ item }} state=present
+  with_items:
+    - postgresql-server-dev-9.4
+    - libpq-dev
+    - ruby-dev
+
+-
+  name: copy PhantomJS installation file
+  copy: src=install_phantomjs.sh mode=u+rwx dest=/tmp/install_phantomjs.sh
+
+-
+  name: Install PhantomJS
+  command: ./install_phantomjs.sh chdir=/tmp
+
+-
+  name: prezento setup
+  command: bin/setup chdir=/vagrant/src/prezento
+
+-
+  name: start prezento
+  shell: if [ -f tmp/pids/server.pid ]; then kill `cat tmp/pids/server.pid`; fi; sleep 5; rails s -b 0.0.0.0 -d
+  args:
+    chdir: /vagrant/src/prezento

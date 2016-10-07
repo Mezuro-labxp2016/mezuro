@@ -1,0 +1,48 @@
+-
+  name: Download analizo key
+  shell: wget -O - http://www.analizo.org/download/signing-key.asc | apt-key add -
+
+-
+  name: Install sources.list
+  copy: src=sources.list dest=/etc/apt/sources.list
+
+-
+  name: Update repository cache
+  command: apt update
+
+-
+  name: Install deps
+  apt: name={{ item }} state=present
+  with_items:
+    - postgresql-server-dev-9.4
+    - libpq-dev
+    - ruby-dev
+    - python-pip
+    - subversion
+    - docker.io
+    - analizo
+
+-
+  name: Start docker
+  service: name=docker enabled=yes state=restarted
+
+-
+  name: Pull codeclimate docker image
+  shell: docker pull codeclimate/codeclimate
+
+- name: Start codeclimate container
+  shell: docker run --rm --env CODECLIMATE_CODE="$PWD" --volume "$PWD":/code --volume /var/run/docker.sock:/var/run/docker.sock --volume /tmp/cc:/tmp/cc codeclimate/codeclimate help
+
+-
+  name: Install radon
+  pip: name=radon
+
+-
+  name: kalibro_processor setup
+  command: bin/setup chdir=/vagrant/src/kalibro_processor
+
+-
+  name: start kalibro_processor
+  shell: if [ -f tmp/pids/server.pid ]; then kill `cat tmp/pids/server.pid`; fi; sleep 5; rails s -b 0.0.0.0 -d -p 8082
+  args:
+    chdir: /vagrant/src/kalibro_processor

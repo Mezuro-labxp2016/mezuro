@@ -1,0 +1,3 @@
+-
+  name: Install ruby
+  apt: name=ruby state=present

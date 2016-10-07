@@ -1,0 +1,17 @@
+-
+  name: Update cache 
+  apt: update_cache=yes
+
+-
+  name: Upgrade packages
+  apt: upgrade=dist
+
+-
+  name: install common packages
+  apt: name={{ item }} state=present
+  with_items:
+    - build-essential
+    - git
+    - vim
+    - htop
+    - curl
