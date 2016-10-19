@@ -16,10 +16,10 @@
 
 -
   name: prezento setup
-  command: bin/setup chdir=/vagrant/src/prezento
+  command: bundle exec bin/setup chdir=/vagrant/prezento
 
 -
   name: start prezento
   shell: if [ -f tmp/pids/server.pid ]; then kill `cat tmp/pids/server.pid`; fi; sleep 5; rails s -b 0.0.0.0 -d
   args:
-    chdir: /vagrant/src/prezento
+    chdir: /vagrant/prezento

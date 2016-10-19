@@ -9,10 +9,10 @@
 
 -
   name: kalibro_configurations setup
-  command: bin/setup chdir=/vagrant/src/kalibro_configurations
+  command: bundle exec bin/setup chdir=/vagrant/kalibro_configurations
 
 -
   name: start kalibro_configurations
   shell: if [ -f tmp/pids/server.pid ]; then kill `cat tmp/pids/server.pid`; fi; sleep 5; rails s -b 0.0.0.0 -d -p 8083
   args:
-    chdir: /vagrant/src/kalibro_configurations
+    chdir: /vagrant/kalibro_configurations
