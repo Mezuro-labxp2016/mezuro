@@ -16,7 +16,7 @@
 
 -
   name: prezento setup
-  command: bundle exec bin/setup chdir=/vagrant/prezento
+  command: bin/setup chdir=/vagrant/prezento
 
 -
   name: start prezento
