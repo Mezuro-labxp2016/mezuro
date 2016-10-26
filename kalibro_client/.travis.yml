@@ -1,0 +1,34 @@
+language: ruby
+rvm:
+  - 2.3.0
+
+addons:
+  postgresql: "9.3"
+
+before_install:
+  - if ruby --version | cut -d ' ' -f 2 | grep -q 2.1.5p273 ; then gem update --system 2.4.8; fi
+  - gem --version
+
+before_script:
+  # Remove bugged libzmq3 package, see https://github.com/travis-ci/travis-ci/issues/982 and https://github.com/travis-ci/travis-ci/issues/1715 for details
+  - sudo apt-get remove libzmq3
+  - git clone https://github.com/mezuro/kalibro_install.git -b v4.0 kalibro_install
+  - KALIBRO_PROCESSOR_VERSION='v1.1.8' KALIBRO_CONFIGURATIONS_VERSION='v2.0.0' ./kalibro_install/install.sh
+  - cp features/support/kalibro_cucumber_helpers.yml.sample features/support/kalibro_cucumber_helpers.yml
+  - export BUNDLE_GEMFILE=$PWD/Gemfile
+  - export CODECLIMATE_REPO_TOKEN=46cbb96b053b03ad66b0355bd96d0787f56fc5a4fc171b8d6eb30c421c5e6777
+
+script:
+  - bundle exec rspec spec
+  - bundle exec cucumber --tags ~@wip
+
+after_failure:
+  - echo Tests failed - preparing to ship logs to Gist
+  - ./kalibro_install/travis-send-logs.sh
+
+notifications:
+  email:
+    recipients:
+      - mezuro-core@lists.ime.usp.br
+    on_success: change
+    on_failure: always

@@ -1,0 +1,3 @@
+kalibro_cucumber_helpers:
+  kalibro_processor_address: "http://localhost:8082"
+  kalibro_configurations_address: "http://localhost:8083"
