@@ -87,6 +87,9 @@ group :cucumber do
   gem 'poltergeist', '~> 1.6.0'
 end
 
+# Use Pumas as the app server
+gem 'puma'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

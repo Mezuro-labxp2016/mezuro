@@ -4,6 +4,7 @@ KalibroConfigurations is the configuration storage web service for Mezuro.
 
 ## Unreleased
 
+- Replace webrick by puma
 - Do not use bin/rake script on bin/setup anymore
 - Disable rubocop Lint/HandleExceptions cop for rake
 - Drop SQLite 3 support
