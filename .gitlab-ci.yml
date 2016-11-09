@@ -4,9 +4,7 @@ before_script:
   - ruby -v
   - which ruby
   - apt update  
-  - apt -y install sudo postgresql
-  - systemctl status postgresql  
-  - systemctl start postgresql
+  - apt -y install sudo postgresql postgresql-client libpq-dev
   - pushd kalibro_install && ./install.sh && popd
 
 rspec:
