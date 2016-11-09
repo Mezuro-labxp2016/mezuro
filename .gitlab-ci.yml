@@ -1,0 +1,10 @@
+image: ruby:2.3.1
+
+before_script:
+  - ruby -v
+  - which ruby
+  - pushd kalibro_install && ./install.sh && popd
+
+rspec:
+  script:
+    - pushd kalibro_configurations && rspec && popd
