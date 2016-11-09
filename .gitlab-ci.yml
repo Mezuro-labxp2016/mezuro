@@ -3,6 +3,7 @@ image: ruby:2.3.1
 before_script:
   - ruby -v
   - which ruby
+  - apt install sudo postgresql
   - pushd kalibro_install && ./install.sh && popd
 
 rspec:
