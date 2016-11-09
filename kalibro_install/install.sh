@@ -31,8 +31,7 @@ if ! [ "${ANALIZO_VERSION}" = "none" ]; then
 fi
 
 # Kalibro Processor
-git clone https://github.com/mezuro/kalibro_processor.git -b "$KALIBRO_PROCESSOR_VERSION" kalibro_processor
-pushd kalibro_processor
+pushd ../kalibro_processor
 psql -c "create role kalibro_processor with createdb login password 'kalibro_processor'" -U postgres
 cp config/database.yml.sample config/database.yml
 cp config/repositories.yml.sample config/repositories.yml
@@ -55,8 +54,7 @@ popd
 unset BUNDLE_GEMFILE BUNDLE_PATH
 
 # Kalibro Configurations
-git clone https://github.com/mezuro/kalibro_configurations.git -b  "$KALIBRO_CONFIGURATIONS_VERSION" kalibro_configurations
-pushd kalibro_configurations
+pushd ../kalibro_configurations
 psql -c "create role kalibro_configurations with createdb login password 'kalibro_configurations'" -U postgres
 cp config/database.yml.postgresql_sample config/database.yml
 
