@@ -1,10 +1,14 @@
 image: ruby:2.3.1
 
+services:
+  - postgres:latest
+
 before_script:
   - ruby -v
   - which ruby
   - apt update  
-  - apt -y install sudo postgresql postgresql-client libpq-dev
+  - apt -y install sudo postgresql-client libpq-dev
+  - sed -i 's/psql/psql -h postgres/' kalibro_install/install.sh
   - pushd kalibro_install && ./install.sh && popd
 
 rspec:
