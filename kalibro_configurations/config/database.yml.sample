@@ -36,5 +36,9 @@ production:
 local:
   <<: *development
 
+ci: 
+  host: postgres
+  <<: *development
+
 cucumber:
   <<: *test

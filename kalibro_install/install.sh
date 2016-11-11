@@ -5,6 +5,7 @@ set -e
 set -o pipefail
 IFS=$'\n\t'
 
+RAILS_ENV=local
 declare -a bundle_opts=('--deployment' '--without=test development' '--retry=3')
 
 # Set script configuration
@@ -45,10 +46,10 @@ else
     bundle install "${bundle_opts[@]}"
 fi
 
-RAILS_ENV=local bundle exec rake db:setup db:migrate
+bundle exec rake db:setup db:migrate
 if ! [ "${KALIBRO_PROCESSOR_START}" = 0 ]; then
-    RAILS_ENV=local bundle exec rails s -p 8082 -d
-    RAILS_ENV=local bundle exec bin/delayed_job start
+    bundle exec rails s -p 8082 -d
+    bundle exec bin/delayed_job start
 fi
 popd
 unset BUNDLE_GEMFILE BUNDLE_PATH
@@ -56,7 +57,7 @@ unset BUNDLE_GEMFILE BUNDLE_PATH
 # Kalibro Configurations
 pushd ../kalibro_configurations
 psql -c "create role kalibro_configurations with createdb login password 'kalibro_configurations'" -U postgres
-cp config/database.yml.postgresql_sample config/database.yml
+cp config/database.yml.sample config/database.yml
 
 export BUNDLE_GEMFILE=$PWD/Gemfile
 if [ -n "${CACHE_DIR+x}" ]; then
