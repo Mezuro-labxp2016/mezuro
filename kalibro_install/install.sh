@@ -5,7 +5,7 @@ set -e
 set -o pipefail
 IFS=$'\n\t'
 
-export RAILS_ENV=local
+export RAILS_ENVIRONMENT=local
 declare -a bundle_opts=('--deployment' '--without=test development' '--retry=3')
 
 # Set script configuration
@@ -46,10 +46,10 @@ else
     bundle install "${bundle_opts[@]}"
 fi
 
-bundle exec rake db:setup db:migrate
+RAILS_ENV=$RAILS_ENVIRONMENT bundle exec rake db:setup db:migrate
 if ! [ "${KALIBRO_PROCESSOR_START}" = 0 ]; then
-    bundle exec rails s -p 8082 -d
-    bundle exec bin/delayed_job start
+    RAILS_ENV=$RAILS_ENVIRONMENT bundle exec rails s -p 8082 -d
+    RAILS_ENV=$RAILS_ENVIRONMENT bundle exec bin/delayed_job start
 fi
 popd
 unset BUNDLE_GEMFILE BUNDLE_PATH
@@ -68,9 +68,9 @@ else
     bundle install "${bundle_opts[@]}"
 fi
 
-bundle exec rake db:setup db:migrate
+RAILS_ENV=$RAILS_ENVIRONMENT bundle exec rake db:setup db:migrate
 if ! [ "${KALIBRO_CONFIGURATIONS_START}" = 0 ]; then
-    bundle exec rails s -p 8083 -d
+    RAILS_ENV=$RAILS_ENVIRONMENT bundle exec rails s -p 8083 -d
 fi
 popd
 unset BUNDLE_GEMFILE BUNDLE_PATH
