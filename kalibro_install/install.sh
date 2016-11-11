@@ -5,7 +5,7 @@ set -e
 set -o pipefail
 IFS=$'\n\t'
 
-RAILS_ENV=local
+export RAILS_ENV=local
 declare -a bundle_opts=('--deployment' '--without=test development' '--retry=3')
 
 # Set script configuration
