@@ -9,7 +9,7 @@ before_script:
   - apt update  
   - apt -y install sudo postgresql-client libpq-dev
   - sed -i 's/psql/psql -h postgres/' kalibro_install/install.sh
-  - sed -i 's/RAILS_ENV=local/RAILS_ENV=ci/' kalibro_install/install.sh
+  - sed -i 's/RAILS_ENVIRONMENT=local/RAILS_ENVIRONMENT=ci/' kalibro_install/install.sh
   - pushd kalibro_install && ./install.sh && popd
 
 rspec:
