@@ -46,6 +46,8 @@ else
     bundle install "${bundle_opts[@]}"
 fi
 
+echo 'variable RAILS_ENVIRONMENT'
+echo $RAILS_ENVIRONMENT
 RAILS_ENV=$RAILS_ENVIRONMENT bundle exec rake db:setup db:migrate
 if ! [ "${KALIBRO_PROCESSOR_START}" = 0 ]; then
     RAILS_ENV=$RAILS_ENVIRONMENT bundle exec rails s -p 8082 -d
