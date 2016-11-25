@@ -13,8 +13,7 @@ before_script:
   - sed -i 's/:test/:test, :ci/g' kalibro_configurations/Gemfile
   - sed -i 's/:ci, require/require/' kalibro_configurations/Gemfile
   - sed -i 's/:test/:test, :ci/g' kalibro_processor/Gemfile  
-  - sed -i '/web-console/d' kalibro_configurations/Gemfile
-  - sed -i '/web-console/d' kalibro_processor/Gemfile
+  - sed -i "s/\(gem 'web-console', '~>2.2'\)/\1, :group => :development/g" kalibro_configurations/Gemfile
   - pushd kalibro_install ; ./install.sh ; popd
 
 rspec:
