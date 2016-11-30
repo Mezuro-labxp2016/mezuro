@@ -18,6 +18,6 @@ before_script:
 rspec:
   script:
     - pushd kalibro_configurations
-    - bundle exec rake spec
+    - RAILS_ENV=ci bundle exec rake spec
     - popd
 
