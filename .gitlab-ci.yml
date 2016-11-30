@@ -14,12 +14,16 @@ before_script:
   - sed -i 's/:ci, require/require/' kalibro_configurations/Gemfile
   - sed -i 's/:test/:test, :ci/g' kalibro_processor/Gemfile  
   - sed -i '/kalibro_configurations_test/a \ \ host\:\ postgres' kalibro_configurations/config/database.yml.sample 
+  - sed -i '/kalibro_processor_test/a \ \ host\:\ postgres' kalibro_processor/config/database.yml.sample 
   - pushd kalibro_install ; ./install.sh ; popd
 
 rspec:
   script:
-    - pushd kalibro_configurations
     - export RAILS_ENV=ci
+    - pushd kalibro_configurations
+    - bundle exec rake spec
+    - popd
+    - pushd kalibro_processor
     - bundle exec rake spec
     - popd
 
