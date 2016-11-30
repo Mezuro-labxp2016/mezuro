@@ -37,7 +37,7 @@ local:
   <<: *development
 
 ci: 
-  <<: *development
+  <<: *test
   host: postgres
 
 cucumber:
