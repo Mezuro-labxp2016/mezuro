@@ -17,4 +17,4 @@ before_script:
 
 rspec:
   script:
-    - pushd kalibro_configurations && bundle exec rake spec && popd
+    - pushd kalibro_configurations && bundle exec rake && popd
