@@ -13,7 +13,7 @@ before_script:
   - sed -i 's/:test/:test, :ci/g' kalibro_configurations/Gemfile
   - sed -i 's/:ci, require/require/' kalibro_configurations/Gemfile
   - sed -i 's/:test/:test, :ci/g' kalibro_processor/Gemfile  
-  - sed -i '/kalibro_configurations_test/a \ \ host: postgres' kalibro_configurations/config/database.yml.sample 
+  - sed -i '/kalibro_configurations_test/a \ \ host\:\ postgres' kalibro_configurations/config/database.yml.sample 
   - pushd kalibro_install ; ./install.sh ; popd
 
 rspec:
