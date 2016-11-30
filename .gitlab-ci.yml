@@ -17,13 +17,19 @@ before_script:
   - sed -i '/kalibro_processor_test/a \ \ host\:\ postgres' kalibro_processor/config/database.yml.sample 
   - pushd kalibro_install ; ./install.sh ; popd
 
-rspec:
+kalibro_configurations:
   script:
     - export RAILS_ENV=ci
     - pushd kalibro_configurations
     - bundle exec rake spec
+    - bundle exec rake cucumber
     - popd
+
+kalibro_processor:
+  script:
+    - export RAILS_ENV=ci
     - pushd kalibro_processor
     - bundle exec rake spec
+    - bundle exec rake cucumber
     - popd
 
