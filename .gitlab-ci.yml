@@ -17,4 +17,8 @@ before_script:
 
 rspec:
   script:
-    - pushd kalibro_configurations && rake spec && popd
+    - pushd kalibro_configurations
+    - export BUNDLE_GEMFILE=$PWD/Gemfile
+    - rake spec
+    - popd
+
